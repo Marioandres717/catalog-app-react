@@ -4,13 +4,13 @@ import { Router, Link } from '@reach/router';
 import Login from './registration/login';
 import SignUp from './registration/sign-up';
 import CatalogList from './catalog/catalog-list';
+import NavBar from './navigation/navbar';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Link to="/">Hello</Link>
-
+        <NavBar />
         <Router>
           <Login path="/login" />
           <SignUp path="/signup" />
