@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Router, Link } from '@reach/router';
+import { Router } from '@reach/router';
 import Login from './registration/login';
 import SignUp from './registration/sign-up';
 import CatalogList from './catalog/catalog-list';

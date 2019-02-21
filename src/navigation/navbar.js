@@ -6,13 +6,12 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import SearchIcon from '@material-ui/icons/Search';
-import MailIcon from '@material-ui/icons/Mail';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { Link } from '@reach/router';
@@ -27,10 +26,6 @@ const styles = (theme) => ({
   menuButton: {
     marginLeft: -12,
     marginRight: 20
-  },
-  link: {
-    color: 'white',
-    textDecoration: 'none'
   },
   title: {
     display: 'none',
@@ -92,13 +87,19 @@ const styles = (theme) => ({
   link: {
     color: 'white',
     textDecoration: 'none'
+  },
+  welcomeMessage: {
+    fontSize: '15px'
   }
 });
 
 class NavBar extends Component {
   state = {
     anchorEl: null,
-    mobileMoreAnchorEl: null
+    mobileMoreAnchorEl: null,
+    user: {
+      name: 'Mario'
+    }
   };
 
   handleProfileMenuOpen = (event) => {
@@ -132,7 +133,8 @@ class NavBar extends Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}>
         <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+        <MenuItem onClick={this.handleMenuClose}>My Wishlist</MenuItem>
+        <MenuItem onClick={this.handleMenuClose}>My Logout</MenuItem>
       </Menu>
     );
 
@@ -146,10 +148,10 @@ class NavBar extends Component {
         <MenuItem onClick={this.handleMobileMenuClose}>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
-              <MailIcon />
+              <ShoppingCartIcon />
             </Badge>
           </IconButton>
-          <p>Messages</p>
+          <p>Shopping Cart</p>
         </MenuItem>
         <MenuItem onClick={this.handleMobileMenuClose}>
           <IconButton color="inherit">
@@ -163,7 +165,7 @@ class NavBar extends Component {
           <IconButton color="inherit">
             <AccountCircle />
           </IconButton>
-          <p>Profile</p>
+          <p>{this.state.user.name}'s profile</p>
         </MenuItem>
       </Menu>
     );
@@ -197,7 +199,7 @@ class NavBar extends Component {
             <div className={classes.sectionDesktop}>
               <IconButton color="inherit">
                 <Badge badgeContent={4} color="secondary">
-                  <MailIcon />
+                  <ShoppingCartIcon />
                 </Badge>
               </IconButton>
               <IconButton color="inherit">
@@ -210,6 +212,9 @@ class NavBar extends Component {
                 aria-haspopup="true"
                 onClick={this.handleProfileMenuOpen}
                 color="inherit">
+                <span className={classes.welcomeMessage}>
+                  Hello, {this.state.user.name}
+                </span>
                 <AccountCircle />
               </IconButton>
             </div>
