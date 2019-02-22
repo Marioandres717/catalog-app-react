@@ -5,6 +5,7 @@ import Login from './registration/login';
 import SignUp from './registration/sign-up';
 import CatalogList from './catalog/catalog-list';
 import NavBar from './navigation/navbar';
+import Main from './landing-page/main';
 
 class App extends Component {
   render() {
@@ -12,9 +13,10 @@ class App extends Component {
       <div className="App">
         <NavBar />
         <Router>
+          <Main path="/" />
           <Login path="/login" />
           <SignUp path="/signup" />
-          <CatalogList path="/" />
+          <CatalogList path="/catalog" />
         </Router>
       </div>
     );
