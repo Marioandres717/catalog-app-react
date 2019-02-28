@@ -6,7 +6,12 @@ import Login from '../registration/login';
 
 const styles = (theme) => ({
   root: {
-    flexgrow: 1
+    flexgrow: 1,
+    background:
+      'url(https://images.unsplash.com/photo-1545119560-8db36a735ee2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80)',
+    maxWidth: 1600,
+    minHeight: 600,
+    margin: '0 auto'
   },
   ladingImage: {
     width: '100%',
@@ -31,7 +36,8 @@ class Main extends Component {
     try {
       const response = await fetch(this.url);
       const data = await response.json();
-      console.log(data);
+      // const duplicated = [...data.categories, ...data.categories];
+      this.setState({ categories: data.categories });
     } catch (err) {
       console.error(err);
     }
@@ -39,13 +45,24 @@ class Main extends Component {
 
   render() {
     const { classes } = this.props;
+    const { categories } = this.state;
     return (
-      <div className={classes.root}>
-        <p> {console.log(this.categories)}</p>
-        <Grid container spacing={24} justify="center">
-          <Grid item xs={3}>
-            <SimpleCard />
-          </Grid>
+      <div>
+        <Grid
+          container
+          spacing={24}
+          justify="center"
+          alignItems="flex-end"
+          className={classes.root}>
+          {categories.map((categorie) => (
+            <Grid item xs={3} key={categorie.id} className={classes.card}>
+              <SimpleCard
+                name={categorie.name}
+                description={categorie.description}
+                picture={categorie.picture}
+              />
+            </Grid>
+          ))}
         </Grid>
       </div>
     );

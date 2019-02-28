@@ -29,21 +29,17 @@ const styles = (theme) => ({
   },
   actions: {
     display: 'flex'
+  },
+  link: {
+    textDecoration: 'none'
   }
 });
 
 class SimpleCard extends Component {
-  state = {
-    title: 'category',
-    catalog: 'House Interiors',
-    image:
-      'https://images.unsplash.com/photo-1445510861639-5651173bc5d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1254&q=80'
-  };
-
   handleClick = (event) => {};
+
   render() {
-    const { classes } = this.props;
-    const { title, catalog, image } = this.state;
+    const { classes, name, desription, picture } = this.props;
     return (
       <Card className={classes.card}>
         <CardContent>
@@ -51,20 +47,22 @@ class SimpleCard extends Component {
             className={classes.title}
             color="textSecondary"
             gutterBottom>
-            {title}
+            {name}
           </Typography>
           <Typography variant="h5" component="h2">
-            {catalog}
+            {name}
           </Typography>
           <CardMedia
             className={classes.media}
-            image={image}
+            image={picture}
             title="mens shoes catalog"
           />
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
           <Button size="small">
-            <Link to="/catalog">Shop now</Link>
+            <Link to="/catalog" className={classes.link}>
+              Shop now
+            </Link>
           </Button>
         </CardActions>
       </Card>
