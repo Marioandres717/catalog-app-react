@@ -7,8 +7,6 @@ import Login from '../registration/login';
 const styles = (theme) => ({
   root: {
     flexgrow: 1,
-    background:
-      'url(https://images.unsplash.com/photo-1545119560-8db36a735ee2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80)',
     maxWidth: 1600,
     minHeight: 600,
     margin: '0 auto'
@@ -22,6 +20,10 @@ const styles = (theme) => ({
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.text.primary
+  },
+  bckgImg: {
+    background:
+      'url(https://images.unsplash.com/photo-1545119560-8db36a735ee2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80)'
   }
 });
 
@@ -36,8 +38,8 @@ class Main extends Component {
     try {
       const response = await fetch(this.url);
       const data = await response.json();
-      // const duplicated = [...data.categories, ...data.categories];
-      this.setState({ categories: data.categories });
+      const duplicated = [...data.categories, ...data.categories];
+      this.setState({ categories: duplicated });
     } catch (err) {
       console.error(err);
     }
@@ -51,9 +53,9 @@ class Main extends Component {
         <Grid
           container
           spacing={24}
-          justify="center"
+          justify="space-around"
           alignItems="flex-end"
-          className={classes.root}>
+          className={`${classes.root} ${classes.bckgImg}`}>
           {categories.map((categorie) => (
             <Grid item xs={3} key={categorie.id} className={classes.card}>
               <SimpleCard
@@ -63,6 +65,10 @@ class Main extends Component {
               />
             </Grid>
           ))}
+        </Grid>
+
+        <Grid container spacing={24} className={classes.root}>
+          <h1>HELLO</h1>
         </Grid>
       </div>
     );
