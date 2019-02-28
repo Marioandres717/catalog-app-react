@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SimpleCard from './simpleCard';
-import Login from '../registration/login';
+import CarouselContainer from './carousel-container';
 
 const styles = (theme) => ({
   root: {
@@ -10,16 +10,6 @@ const styles = (theme) => ({
     maxWidth: 1600,
     minHeight: 600,
     margin: '0 auto'
-  },
-  ladingImage: {
-    width: '100%',
-    height: '60%'
-  },
-  paper: {
-    marginTop: theme.spacing.unit * 2,
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: theme.palette.text.primary
   },
   bckgImg: {
     background:
@@ -29,7 +19,8 @@ const styles = (theme) => ({
 
 class Main extends Component {
   state = {
-    categories: []
+    categories: [],
+    items: []
   };
 
   url = 'http://localhost:5000/';
@@ -38,8 +29,7 @@ class Main extends Component {
     try {
       const response = await fetch(this.url);
       const data = await response.json();
-      const duplicated = [...data.categories, ...data.categories];
-      this.setState({ categories: duplicated });
+      this.setState({ categories: data.categories, items: data.items });
     } catch (err) {
       console.error(err);
     }
@@ -47,7 +37,7 @@ class Main extends Component {
 
   render() {
     const { classes } = this.props;
-    const { categories } = this.state;
+    const { categories, items } = this.state;
     return (
       <div>
         <Grid
@@ -66,9 +56,14 @@ class Main extends Component {
             </Grid>
           ))}
         </Grid>
-
         <Grid container spacing={24} className={classes.root}>
-          <h1>HELLO</h1>
+          {categories.map((category) => (
+            <CarouselContainer
+              items={items}
+              category={category.name}
+              key={category.id}
+            />
+          ))}
         </Grid>
       </div>
     );
