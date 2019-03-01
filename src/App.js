@@ -6,6 +6,7 @@ import SignUp from './registration/sign-up';
 import CatalogList from './catalog/catalog-list';
 import NavBar from './navigation/navbar';
 import Main from './landing-page/main';
+import ItemList from './catalog/items/item-list';
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
           <Login path="/login" />
           <SignUp path="/signup" />
           <CatalogList path="/catalog" />
+          <ItemList path="/items" />
         </Router>
       </div>
     );
