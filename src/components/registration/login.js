@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-
+import Facebook from './facebook';
 export default class Login extends Component {
   render() {
-    return <h2>Login Component</h2>;
+    return (
+      <div>
+        <Facebook />
+      </div>
+    );
   }
 }
