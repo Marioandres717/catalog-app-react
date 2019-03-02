@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Router } from '@reach/router';
-import Login from './registration/login';
-import SignUp from './registration/sign-up';
-import CatalogList from './catalog/catalog-list';
-import NavBar from './navigation/navbar';
-import Main from './landing-page/main';
-import ItemList from './catalog/items/item-list';
+import Login from './components/registration/login';
+import SignUp from './components/registration/sign-up';
+import CatalogList from './components/catalog/catalog-list';
+import NavBar from './components/navigation/navbar';
+import Main from './components/landing-page/main';
+import ItemList from './components/catalog/items/item-list';
 
 class App extends Component {
   render() {
