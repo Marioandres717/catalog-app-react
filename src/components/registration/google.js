@@ -15,7 +15,8 @@ export default class Google extends Component {
       isLoggedIn: true,
       userID: response.profileObj.googleId,
       email: response.profileObj.email,
-      name: response.profileObj.givenName + response.profileObj.familyName,
+      name:
+        response.profileObj.givenName + ' ' + response.profileObj.familyName,
       picture: response.profileObj.imageUrl
     });
   };

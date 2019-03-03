@@ -24,32 +24,33 @@
 .item-picture {
   width: 100%;
 }
-/* .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.login {
+  display: grid;
+  background: rgba(255, 255, 255, 0.6);
+  grid-template-columns: minmax(500px, 1fr) 1fr;
+  grid-gap: 10px;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+.login-form {
+  display: grid;
+  background: rgba(255, 255, 255, 0.8);
+  grid-template-columns: minmax(150px, 300px);
+  grid-gap: 10px;
+  padding: 50px;
+  border: 1px solid black;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}  */
+.login-image {
+  grid-row: span 2;
+}
+
+.Oauth-providers {
+  display: grid;
+  background: rgba(255, 255, 255, 0.8);
+  grid-gap: 10px;
+  padding: 60px;
+  border: 1px solid black;
+}
