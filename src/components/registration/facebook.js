@@ -10,15 +10,36 @@ export default class Facebook extends Component {
     picture: ''
   };
 
-  responseFacebook = (response) => {
-    // console.log(response);
-    this.setState({
-      isLoggedIn: true,
-      userID: response.userID,
-      name: response.name,
-      email: response.email,
-      picture: response.picture.data.url
-    });
+  responseFacebook = async (response) => {
+    try {
+      if (response.accessToken) {
+        console.log(response);
+        const result = await fetch('http://localhost:5000/fbconnect', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ data: response.accessToken })
+        });
+        console.log(result);
+
+        const userID = await result.json();
+        this.setState(
+          {
+            isLoggedIn: true,
+            userID: userID,
+            name: response.name,
+            email: response.email,
+            picture: response.picture.data.url
+          },
+          (state) => {
+            console.log('hola', this.state);
+          }
+        );
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   componentClicked = () => console.log('clicked');
@@ -43,7 +64,7 @@ export default class Facebook extends Component {
       fbContent = (
         <FacebookLogin
           appId="651367041988776"
-          autoLoad={true}
+          autoLoad={false}
           fields="name,email,picture"
           onClick={this.componentClicked}
           callback={this.responseFacebook}

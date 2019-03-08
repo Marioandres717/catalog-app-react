@@ -3,7 +3,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SimpleCard from './simpleCard';
 import CarouselContainer from './carousel-container';
-import Google from '../registration/google';
 
 const styles = (theme) => ({
   root: {
@@ -66,7 +65,6 @@ class Main extends Component {
             />
           ))}
         </Grid>
-        <Google />
       </div>
     );
   }

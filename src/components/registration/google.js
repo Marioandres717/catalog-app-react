@@ -11,14 +11,20 @@ export default class Google extends Component {
   };
   responseGoogle = (response) => {
     console.log(response);
-    this.setState({
-      isLoggedIn: true,
-      userID: response.profileObj.googleId,
-      email: response.profileObj.email,
-      name:
-        response.profileObj.givenName + ' ' + response.profileObj.familyName,
-      picture: response.profileObj.imageUrl
-    });
+    const profile = response.getBasicProfile();
+    // console.log(profile);
+    this.setState(
+      {
+        isLoggedIn: true,
+        userID: profile.getId(),
+        email: profile.getEmail(),
+        name: profile.getName(),
+        picture: profile.getImageUrl()
+      },
+      (state) => {
+        console.log(this.state);
+      }
+    );
   };
   render() {
     let googleContent;
