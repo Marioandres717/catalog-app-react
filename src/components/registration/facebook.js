@@ -2,52 +2,11 @@ import React, { Component } from 'react';
 import FacebookLogin from 'react-facebook-login';
 
 export default class Facebook extends Component {
-  state = {
-    isLoggedIn: false,
-    userID: '',
-    name: '',
-    email: '',
-    picture: ''
-  };
-
-  responseFacebook = async (response) => {
-    try {
-      if (response.accessToken) {
-        console.log(response);
-        const result = await fetch('http://localhost:5000/fbconnect', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ data: response.accessToken })
-        });
-        console.log(result);
-
-        const userID = await result.json();
-        this.setState(
-          {
-            isLoggedIn: true,
-            userID: userID,
-            name: response.name,
-            email: response.email,
-            picture: response.picture.data.url
-          },
-          (state) => {
-            console.log('hola', this.state);
-          }
-        );
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   componentClicked = () => console.log('clicked');
   render() {
-    let fbContent;
-
-    if (this.state.isLoggedIn) {
-      fbContent = (
+    var { handleLogin, isLoggedIn, name, email, picture } = this.props;
+    if (isLoggedIn) {
+      var fbContent = (
         <div
           style={{
             width: '400px',
@@ -55,19 +14,19 @@ export default class Facebook extends Component {
             background: '#f4f4f4',
             padding: '20px'
           }}>
-          <img src={this.state.picture} alt={this.state.name} />
-          <h2>Welcome {this.state.name}</h2>
-          Email: {this.state.email}
+          <img src={picture} alt={name} />
+          <h2>Welcome {name}</h2>
+          Email: {email}
         </div>
       );
     } else {
-      fbContent = (
+      var fbContent = (
         <FacebookLogin
           appId="651367041988776"
-          autoLoad={false}
+          autoLoad={true}
           fields="name,email,picture"
           onClick={this.componentClicked}
-          callback={this.responseFacebook}
+          callback={handleLogin}
         />
       );
     }
