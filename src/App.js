@@ -31,9 +31,9 @@ class App extends Component {
         const result = await fetch('http://localhost:5000/fbconnect', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ data: response.accessToken })
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${response.accessToken}`
+          }
         });
         console.log(result);
 
