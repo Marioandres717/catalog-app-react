@@ -8,6 +8,7 @@ import NavBar from './components/navigation/navbar';
 import Main from './components/landing-page/main';
 import ItemList from './components/catalog/items/item-list';
 import { Provider } from './userContext';
+import ItemDetails from './components/catalog/items/item-detail';
 
 class App extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class App extends Component {
     };
   }
 
-  handleFbLogin = async (response) => {
+  handleFbLogin = async response => {
     try {
       if (response.accessToken) {
         console.log(response);
@@ -57,7 +58,7 @@ class App extends Component {
   };
 
   handleFbLogout = () => {
-    window.FB.logout((response) => {
+    window.FB.logout(response => {
       console.log(response);
       this.setState(
         {
@@ -101,6 +102,7 @@ class App extends Component {
             <Login path="/login" />
             <SignUp path="/signup" />
             <CatalogList path="/catalog" />
+            <ItemDetails path="/items/:id" />
             <ItemList path="/items" />
           </Router>
         </Provider>
