@@ -22,7 +22,8 @@ const Facebook = props => {
           id: userID,
           name: response.name,
           email: response.email,
-          picture: response.picture.data.url
+          picture: response.picture.data.url,
+          accessToken: response.accessToken
         };
         setUser(u);
         closeModal();

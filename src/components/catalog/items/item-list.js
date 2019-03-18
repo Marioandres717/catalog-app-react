@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
+import UserContext from '../../../userContext';
 
 export default class ItemList extends Component {
   state = {
     items: []
   };
   async componentDidMount() {
-    const response = await fetch('http://localhost:5000/');
+    const response = await fetch(
+      `http://localhost:5000/categories/${this.props.categoryId}/items`
+    );
     const data = await response.json();
     this.setState({
       items: data.items
@@ -38,9 +41,18 @@ export default class ItemList extends Component {
             </div>
           </Link>
         ))}
-        <Link to={`/categories/${categoryId}/item/add`}>
-          <button>Add Item</button>
-        </Link>
+        <UserContext.Consumer>
+          {user =>
+            user[0].id != null ? (
+              <Link
+                to={`/categories/${categoryId}/additems`}
+                state={{ user: user[0] }}
+              >
+                <button>Add Item</button>
+              </Link>
+            ) : null
+          }
+        </UserContext.Consumer>
       </div>
     );
   }

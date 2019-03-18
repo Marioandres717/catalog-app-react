@@ -5,7 +5,8 @@ const UserContext = React.createContext([
     id: null,
     name: '',
     email: '',
-    picture: ''
+    picture: '',
+    access_token: ''
   },
   () => {}
 ]);

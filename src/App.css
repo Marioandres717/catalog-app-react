@@ -79,3 +79,31 @@
   border-radius: 5px;
   text-align: center;
 }
+
+.item-detail {
+  background-color: whitesmoke;
+  min-width: 500px;
+  text-align: center;
+}
+
+.item-detail .item-picture {
+  max-width: 150px;
+}
+
+.item-detail .item-picture img {
+  width: 100%;
+}
+
+.item-form {
+  display: flex;
+  max-width: 500px;
+  margin: 10px;
+  flex-direction: column;
+}
+
+.item-form > input,
+.item-form > textarea {
+  padding: 5px;
+  border-radius: 5px;
+  margin: 10px;
+}
