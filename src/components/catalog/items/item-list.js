@@ -37,6 +37,9 @@ export default class ItemList extends Component {
             </div>
           </Link>
         ))}
+        <Link to="/item/add">
+          <button>Add Item</button>
+        </Link>
       </div>
     );
   }

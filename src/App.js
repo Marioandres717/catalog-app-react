@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import './App.css';
 import { Router } from '@reach/router';
 import Login from './components/registration/login';
-import SignUp from './components/registration/sign-up';
 import CatalogList from './components/catalog/catalog-list';
 import NavBar from './components/navigation/navbar';
 import Main from './components/landing-page/main';
 import ItemList from './components/catalog/items/item-list';
 import UserContext from './userContext';
 import ItemDetails from './components/catalog/items/item-detail';
+import ItemCreate from './components/catalog/items/item-create';
 
 const App = () => {
   const user = useState(UserContext);
@@ -20,10 +20,10 @@ const App = () => {
         <Router>
           <Main path="/" />
           <Login path="/login" />
-          <SignUp path="/signup" />
-          <CatalogList path="/catalog" />
-          <ItemDetails path="/items/:id" />
-          <ItemList path="/items" />
+          <CatalogList path="/categories" />
+          <ItemList path="/categories/:categoryId/items" />
+          <ItemDetails path="/categories/:categoryId/items/:itemId" />
+          <ItemCreate path="/categories/:categoryId/additems" />
         </Router>
       </div>
     </UserContext.Provider>
