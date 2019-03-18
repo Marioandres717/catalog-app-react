@@ -1,35 +1,45 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import FacebookLogin from 'react-facebook-login';
+import UserContext from '../../userContext';
 
-export default class Facebook extends Component {
-  componentClicked = () => console.log('clicked');
-  render() {
-    var { handleLogin, isLoggedIn, name, email, picture } = this.props;
-    if (isLoggedIn) {
-      var fbContent = (
-        <div
-          style={{
-            width: '400px',
-            margin: 'auto',
-            background: '#f4f4f4',
-            padding: '20px'
-          }}>
-          <img src={picture} alt={name} />
-          <h2>Welcome {name}</h2>
-          Email: {email}
-        </div>
-      );
-    } else {
-      var fbContent = (
-        <FacebookLogin
-          appId="651367041988776"
-          autoLoad={false}
-          fields="name,email,picture"
-          onClick={this.componentClicked}
-          callback={handleLogin}
-        />
-      );
+const Facebook = props => {
+  // eslint-disable-next-line no-unused-vars
+  var [user, setUser] = useContext(UserContext);
+  var { closeModal } = props;
+
+  async function handleLogin(response) {
+    try {
+      if (response.accessToken) {
+        let result = await fetch('http://localhost:5000/fbconnect', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${response.accessToken}`
+          }
+        });
+        let userID = await result.json();
+        let u = {
+          id: userID,
+          name: response.name,
+          email: response.email,
+          picture: response.picture.data.url
+        };
+        setUser(u);
+        closeModal();
+      }
+    } catch (e) {
+      console.error(e);
     }
-    return <div>{fbContent}</div>;
   }
-}
+
+  return (
+    <FacebookLogin
+      appId="651367041988776"
+      autoLoad={false}
+      fields="name,email,picture"
+      callback={handleLogin}
+    />
+  );
+};
+
+export default Facebook;

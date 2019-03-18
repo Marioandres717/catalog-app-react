@@ -1,15 +1,13 @@
 import React from 'react';
 
-const UserContext = React.createContext({
-  isLoggedIn: false,
-  userID: '',
-  name: '',
-  email: '',
-  picture: '',
-  handleFbLogin() {},
-  handleFbLogout() {},
-  handleDeleteFbPermission() {}
-});
+const UserContext = React.createContext([
+  {
+    id: null,
+    name: '',
+    email: '',
+    picture: ''
+  },
+  () => {}
+]);
 
-export const Provider = UserContext.Provider;
-export const Consumer = UserContext.Consumer;
+export default UserContext;

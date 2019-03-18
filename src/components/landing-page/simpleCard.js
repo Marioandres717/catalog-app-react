@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Link } from '@reach/router';
 
-const styles = (theme) => ({
+const styles = theme => ({
   card: {
     maxWidth: 400
   },
@@ -36,17 +36,18 @@ const styles = (theme) => ({
 });
 
 class SimpleCard extends Component {
-  handleClick = (event) => {};
+  handleClick = event => {};
 
   render() {
-    const { classes, name, desription, picture } = this.props;
+    const { classes, name, picture } = this.props;
     return (
       <Card className={classes.card}>
         <CardContent>
           <Typography
             className={classes.title}
             color="textSecondary"
-            gutterBottom>
+            gutterBottom
+          >
             {name}
           </Typography>
           <Typography variant="h5" component="h2">
