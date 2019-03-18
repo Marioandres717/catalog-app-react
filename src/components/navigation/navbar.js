@@ -16,7 +16,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { Link } from '@reach/router';
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     flexGrow: 1
   },
@@ -102,7 +102,7 @@ class NavBar extends Component {
     }
   };
 
-  handleProfileMenuOpen = (event) => {
+  handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
@@ -111,7 +111,7 @@ class NavBar extends Component {
     this.handleMobileMenuClose();
   };
 
-  handleMobileMenuOpen = (event) => {
+  handleMobileMenuOpen = event => {
     this.setState({ mobileMoreAnchorEl: event.currentTarget });
   };
 
@@ -131,7 +131,8 @@ class NavBar extends Component {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={isMenuOpen}
-        onClose={this.handleMenuClose}>
+        onClose={this.handleMenuClose}
+      >
         <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
         <MenuItem onClick={this.handleMenuClose}>My Wishlist</MenuItem>
         <MenuItem onClick={this.handleMenuClose}>My Logout</MenuItem>
@@ -144,7 +145,8 @@ class NavBar extends Component {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={isMobileMenuOpen}
-        onClose={this.handleMenuClose}>
+        onClose={this.handleMenuClose}
+      >
         <MenuItem onClick={this.handleMobileMenuClose}>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -178,7 +180,8 @@ class NavBar extends Component {
               className={classes.title}
               variant="h6"
               color="inherit"
-              noWrap>
+              noWrap
+            >
               <Link to="/" className={classes.link}>
                 Catalog App
               </Link>
@@ -211,18 +214,22 @@ class NavBar extends Component {
                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                 aria-haspopup="true"
                 onClick={this.handleProfileMenuOpen}
-                color="inherit">
-                <span className={classes.welcomeMessage}>
-                  Hello, {this.state.user.name}
-                </span>
-                <AccountCircle />
+                color="inherit"
+              >
+                <Link to="/login">
+                  <span className={classes.welcomeMessage}>
+                    Hello, {this.state.user.name}
+                  </span>
+                  <AccountCircle />
+                </Link>
               </IconButton>
             </div>
             <div className={classes.sectionMobile}>
               <IconButton
                 aria-haspopup="true"
                 onClick={this.handleMobileMenuOpen}
-                color="inherit">
+                color="inherit"
+              >
                 <MoreIcon />
               </IconButton>
             </div>

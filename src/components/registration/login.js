@@ -27,8 +27,11 @@ export default class Login extends Component {
       <UserContext.Consumer>
         {user => (
           <div>
-            <h1>{user.name}</h1>
-            <button onClick={this.toggleModal}>Sign up | Login</button>
+            {user[0].id != null ? (
+              <h1>Hello, {user[0].name}</h1>
+            ) : (
+              <button onClick={this.toggleModal}>Sign up | Login</button>
+            )}
             {showModal ? (
               <Modal>
                 <div>
