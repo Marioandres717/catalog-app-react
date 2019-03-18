@@ -61,7 +61,7 @@ class SimpleCard extends Component {
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
           <Button size="small">
-            <Link to="/catalog" className={classes.link}>
+            <Link to="/categories" className={classes.link}>
               Shop now
             </Link>
           </Button>

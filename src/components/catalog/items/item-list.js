@@ -14,12 +14,13 @@ export default class ItemList extends Component {
   }
 
   render() {
+    const { categoryId } = this.props;
     const { items } = this.state;
     return (
       <div className="item-container">
         {items.map(item => (
           <Link
-            to={`/items/${item.id}`}
+            to={`/categories/${categoryId}/items/${item.id}`}
             key={item.id}
             style={{ textDecoration: 'none', color: 'white' }}
           >
@@ -37,7 +38,7 @@ export default class ItemList extends Component {
             </div>
           </Link>
         ))}
-        <Link to="/item/add">
+        <Link to={`/categories/${categoryId}/item/add`}>
           <button>Add Item</button>
         </Link>
       </div>

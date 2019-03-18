@@ -6,7 +6,7 @@ const ItemDetails = props => {
   const [picture, setPicture] = useState([]);
 
   useEffect(() => {
-    fetchItem(props.id).then(item => {
+    fetchItem(props.categoryId, props.itemId).then(item => {
       let { name, description, picture } = item;
       setName(name);
       setDescription(description);
@@ -14,10 +14,13 @@ const ItemDetails = props => {
     });
   }, [name, description, picture]);
 
-  async function fetchItem(itemId) {
-    const response = await fetch(`http://localhost:5000/items/${itemId}`, {
-      method: 'GET'
-    });
+  async function fetchItem(categoryId, itemId) {
+    const response = await fetch(
+      `http://localhost:5000/categories/${categoryId}/items/${itemId}`,
+      {
+        method: 'GET'
+      }
+    );
     const { item } = await response.json();
     return item;
   }

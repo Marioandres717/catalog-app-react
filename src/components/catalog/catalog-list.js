@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CatalogDetail from './catalog-detail';
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     maxWidth: '87vw',
     maxHeight: '100vh',
@@ -34,7 +34,7 @@ class CatalogList extends Component {
     return (
       <div className={classes.root}>
         <h2 className={classes.centerText}>List of categories</h2>
-        {categories.map((category) => (
+        {categories.map(category => (
           <div key={category.id}>
             <CatalogDetail category={category} />
           </div>

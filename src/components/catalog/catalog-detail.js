@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import { Link } from '@reach/router';
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     border: '5px solid black',
     margin: '2%',
@@ -23,21 +23,18 @@ const styles = (theme) => ({
 class CatalogDetail extends Component {
   render() {
     const { classes, category } = this.props;
+    const { name, description, id, picture } = category;
     return (
       <div className={classes.root}>
         <div className={classes.container}>
-          <img
-            src={category.picture}
-            alt={category.name}
-            className={classes.picture}
-          />
+          <img src={picture} alt={name} className={classes.picture} />
         </div>
 
         <div className="info">
-          <h3>{category.name}</h3>
-          <p>{category.description}</p>
+          <h3>{name}</h3>
+          <p>{description}</p>
           <Button>
-            <Link to="/items">Go to products</Link>
+            <Link to={`/categories/${id}/items`}>Go to products</Link>
           </Button>
         </div>
       </div>
