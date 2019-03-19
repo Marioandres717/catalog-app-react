@@ -10,7 +10,6 @@ const ItemCreate = props => {
   );
   const [picture, setPicture] = useState(item != null ? item.picture : []);
 
-  // TODO: DELETE ITEM
   async function addItem() {
     try {
       const accessToken = user.accessToken;
