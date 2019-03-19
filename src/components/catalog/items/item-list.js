@@ -10,9 +10,9 @@ export default class ItemList extends Component {
     const response = await fetch(
       `http://localhost:5000/categories/${this.props.categoryId}/items`
     );
-    const data = await response.json();
+    const { items } = await response.json();
     this.setState({
-      items: data.items
+      items: items
     });
   }
 

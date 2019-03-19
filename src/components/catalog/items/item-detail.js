@@ -48,10 +48,8 @@ const ItemDetails = props => {
               <Link
                 to={`/categories/${categoryId}/additems`}
                 state={{
-                  itemId,
-                  name,
-                  description,
-                  picture
+                  user: user[0],
+                  item: { itemId, name, description, picture }
                 }}
               >
                 <button>Edit</button>

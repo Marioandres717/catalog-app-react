@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 const ItemCreate = props => {
   const { categoryId, location } = props;
   const { user } = location.state;
-  const [name, setName] = useState([]);
-  const [description, setDescription] = useState([]);
-  const [picture, setPicture] = useState([]);
+  const { item } = location.state;
+  const [name, setName] = useState(item != null ? item.name : []);
+  const [description, setDescription] = useState(
+    item != null ? item.description : []
+  );
+  const [picture, setPicture] = useState(item != null ? item.picture : []);
 
-  // TODO: EDIT ITEM
   // TODO: DELETE ITEM
   async function addItem() {
     try {
@@ -28,6 +30,35 @@ const ItemCreate = props => {
           userId: user.id
         })
       });
+      console.log('successfully Created');
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async function editItem() {
+    try {
+      const accessToken = user.accessToken;
+      await fetch(
+        `http://localhost:5000/categories/${categoryId}/items/${item.itemId}`,
+        {
+          method: 'PUT',
+          mode: 'cors',
+          credentials: 'same-origin',
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+          },
+          body: JSON.stringify({
+            name,
+            picture,
+            description,
+            categoryId,
+            userId: user.id
+          })
+        }
+      );
+      console.log('successfully change');
     } catch (e) {
       console.error(e);
     }
@@ -40,15 +71,15 @@ const ItemCreate = props => {
         action="submit"
         onSubmit={e => {
           e.preventDefault();
-          addItem();
         }}
       >
-        <label htmlFor="item-name">Name:</label>
+        <label htmlFor="item-name">Name: </label>
         <input
           type="text"
           name="item-name"
           id="name"
           onChange={e => setName(e.target.value)}
+          placeholder={item != null ? item.name : 'Enter Name'}
         />
         <label htmlFor="item-description">Description:</label>
         <textarea
@@ -57,6 +88,7 @@ const ItemCreate = props => {
           cols="30"
           rows="5"
           onChange={e => setDescription(e.target.value)}
+          placeholder={item != null ? item.description : 'Enter Description'}
         />
         <label htmlFor="item-picture">Picture:</label>
         <input
@@ -64,8 +96,12 @@ const ItemCreate = props => {
           name="item-picture"
           id="picture"
           onChange={e => setPicture(e.target.value)}
+          placeholder={item != null ? item.picture : 'Enter picture Url'}
         />
-        <button type="submit">Save</button>
+
+        <button onClick={item != null ? editItem : addItem} type="submit">
+          Save
+        </button>
       </form>
     </div>
   );
