@@ -25,7 +25,6 @@ var Main = props => {
   var url = 'http://localhost:5000/';
 
   useEffect(() => {
-    console.log('here');
     fetchHomeContent().then(data => {
       let { categories, items } = data;
       setCategories(categories);

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CatalogDetail from './catalog-detail';
 
@@ -14,34 +14,37 @@ const styles = theme => ({
     textAlign: 'center'
   }
 });
-class CatalogList extends Component {
-  url = 'http://localhost:5000/';
-  state = {
-    categories: []
-  };
-  async componentDidMount() {
+const CatalogList = props => {
+  var url = 'http://localhost:5000/';
+  var { classes } = props;
+  var [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetchCategories().then(data => {
+      setCategories(data.categories);
+    });
+  }, []);
+
+  async function fetchCategories() {
     try {
-      const response = await fetch(this.url);
+      const response = await fetch(url);
       const data = await response.json();
-      this.setState({ categories: data.categories });
+      return data;
     } catch (err) {
       console.error(err);
     }
   }
-  render() {
-    const { classes } = this.props;
-    const { categories } = this.state;
-    return (
-      <div className={classes.root}>
-        <h2 className={classes.centerText}>List of categories</h2>
-        {categories.map(category => (
-          <div key={category.id}>
-            <CatalogDetail category={category} />
-          </div>
-        ))}
-      </div>
-    );
-  }
-}
+
+  return (
+    <div className={classes.root}>
+      <h2 className={classes.centerText}>List of categories</h2>
+      {categories.map(category => (
+        <div key={category.id}>
+          <CatalogDetail category={category} />
+        </div>
+      ))}
+    </div>
+  );
+};
 
 export default withStyles(styles)(CatalogList);
