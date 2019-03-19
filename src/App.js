@@ -23,7 +23,7 @@ const App = () => {
         picture: localStorage.picture
       };
 
-      let [u, setU] = user;
+      let setU = user[1];
       setU(storage);
     }
   }, []);

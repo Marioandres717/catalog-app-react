@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SimpleCard from './simpleCard';
 import CarouselContainer from './carousel-container';
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     flexgrow: 1,
     maxWidth: 1600,
@@ -17,57 +17,62 @@ const styles = (theme) => ({
   }
 });
 
-class Main extends Component {
-  state = {
-    categories: [],
-    items: []
-  };
+var Main = props => {
+  var [categories, setCategories] = useState([]);
+  var [items, setItems] = useState([]);
+  var { classes } = props;
 
-  url = 'http://localhost:5000/';
+  var url = 'http://localhost:5000/';
 
-  async componentDidMount() {
+  useEffect(() => {
+    console.log('here');
+    fetchHomeContent().then(data => {
+      let { categories, items } = data;
+      setCategories(categories);
+      setItems(items);
+    });
+  }, []);
+
+  async function fetchHomeContent() {
     try {
-      const response = await fetch(this.url);
+      const response = await fetch(url);
       const data = await response.json();
-      this.setState({ categories: data.categories, items: data.items });
+      return data;
     } catch (err) {
       console.error(err);
     }
   }
 
-  render() {
-    const { classes } = this.props;
-    const { categories, items } = this.state;
-    return (
-      <div>
-        <Grid
-          container
-          spacing={24}
-          justify="space-around"
-          alignItems="flex-end"
-          className={`${classes.root} ${classes.bckgImg}`}>
-          {categories.map((categorie) => (
-            <Grid item xs={3} key={categorie.id} className={classes.card}>
-              <SimpleCard
-                name={categorie.name}
-                description={categorie.description}
-                picture={categorie.picture}
-              />
-            </Grid>
-          ))}
-        </Grid>
-        <Grid container spacing={24} className={classes.root}>
-          {categories.map((category) => (
-            <CarouselContainer
-              items={items}
-              category={category.name}
-              key={category.id}
+  return (
+    <div>
+      <Grid
+        container
+        spacing={24}
+        justify="space-around"
+        alignItems="flex-end"
+        className={`${classes.root} ${classes.bckgImg}`}
+      >
+        {categories.map(category => (
+          <Grid item xs={3} key={category.id} className={classes.card}>
+            <SimpleCard
+              name={category.name}
+              description={category.description}
+              picture={category.picture}
             />
-          ))}
-        </Grid>
-      </div>
-    );
-  }
-}
+          </Grid>
+        ))}
+      </Grid>
+      <Grid container spacing={24} className={classes.root}>
+        {categories.map(category => (
+          <CarouselContainer
+            items={items}
+            category={category.name}
+            key={category.id}
+          />
+        ))}
+      </Grid>
+    </div>
+  );
+};
 
 export default withStyles(styles)(Main);
