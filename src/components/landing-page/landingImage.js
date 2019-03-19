@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
@@ -18,9 +18,8 @@ const styles = (theme) => ({
   }
 });
 
-class LadingImage extends Component {
-  render() {
-    const { classes } = this.props;
+var LadingImage = (props) => {
+    const { classes } = props;
     return (
       <Grid container spacing={24} justify="center">
         <Grid item xs={10}>
@@ -32,7 +31,6 @@ class LadingImage extends Component {
         </Grid>
       </Grid>
     );
-  }
 }
 
 export default withStyles(styles)(LadingImage);

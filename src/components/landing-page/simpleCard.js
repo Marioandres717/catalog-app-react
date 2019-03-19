@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -35,40 +35,36 @@ const styles = theme => ({
   }
 });
 
-class SimpleCard extends Component {
-  handleClick = event => {};
-
-  render() {
-    const { classes, name, picture } = this.props;
-    return (
-      <Card className={classes.card}>
-        <CardContent>
-          <Typography
-            className={classes.title}
-            color="textSecondary"
-            gutterBottom
-          >
-            {name}
-          </Typography>
-          <Typography variant="h5" component="h2">
-            {name}
-          </Typography>
-          <CardMedia
-            className={classes.media}
-            image={picture}
-            title="mens shoes catalog"
-          />
-        </CardContent>
-        <CardActions className={classes.actions} disableActionSpacing>
-          <Button size="small">
-            <Link to="/categories" className={classes.link}>
-              Shop now
-            </Link>
-          </Button>
-        </CardActions>
-      </Card>
-    );
-  }
-}
+var SimpleCard = props => {
+  const { classes, name, picture } = props;
+  return (
+    <Card className={classes.card}>
+      <CardContent>
+        <Typography
+          className={classes.title}
+          color="textSecondary"
+          gutterBottom
+        >
+          {name}
+        </Typography>
+        <Typography variant="h5" component="h2">
+          {name}
+        </Typography>
+        <CardMedia
+          className={classes.media}
+          image={picture}
+          title="mens shoes catalog"
+        />
+      </CardContent>
+      <CardActions className={classes.actions} disableActionSpacing>
+        <Button size="small">
+          <Link to="/categories" className={classes.link}>
+            Shop now
+          </Link>
+        </Button>
+      </CardActions>
+    </Card>
+  );
+};
 
 export default withStyles(styles)(SimpleCard);

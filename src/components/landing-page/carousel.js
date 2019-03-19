@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 
-const styles = (theme) => ({
+const styles = theme => ({
   gridList: {
     flexWrap: 'nowrap',
     transform: 'translateZ(0)'
@@ -18,27 +18,25 @@ const styles = (theme) => ({
   }
 });
 
-class Carousel extends Component {
-  render() {
-    const { classes, items } = this.props;
+var Carousel = props => {
+  const { classes, items } = props;
 
-    return (
-      <GridList cols={2.5} className={classes.gridList}>
-        {items.map((item) => (
-          <GridListTile key={item.id}>
-            <img src={item.picture} alt={items.name} />
-            <GridListTileBar
-              title={item.name}
-              classes={{
-                root: classes.titleBar,
-                title: classes.title
-              }}
-            />
-          </GridListTile>
-        ))}
-      </GridList>
-    );
-  }
-}
+  return (
+    <GridList cols={2.5} className={classes.gridList}>
+      {items.map(item => (
+        <GridListTile key={item.id}>
+          <img src={item.picture} alt={items.name} />
+          <GridListTileBar
+            title={item.name}
+            classes={{
+              root: classes.titleBar,
+              title: classes.title
+            }}
+          />
+        </GridListTile>
+      ))}
+    </GridList>
+  );
+};
 
 export default withStyles(styles)(Carousel);
