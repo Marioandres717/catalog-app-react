@@ -5,7 +5,7 @@ import UserContext from '../../userContext';
 const Facebook = props => {
   // eslint-disable-next-line no-unused-vars
   var [user, setUser] = useContext(UserContext);
-  var { closeModal } = props;
+  var { closeModal, localStorage } = props;
 
   async function handleLogin(response) {
     try {
@@ -27,6 +27,7 @@ const Facebook = props => {
         };
         setUser(u);
         closeModal();
+        localStorage(u);
       }
     } catch (e) {
       console.error(e);

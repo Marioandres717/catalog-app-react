@@ -6,13 +6,20 @@ import Modal from '../../modal';
 
 var Login = props => {
   var [showModal, setModal] = useState(false);
-  console.log(showModal);
   function toggleModal() {
     setModal(!showModal);
   }
 
   function closeModal() {
     setModal(false);
+  }
+
+  function saveInfoInLocalStorage(user) {
+    localStorage.setItem('accessToken', user.accessToken);
+    localStorage.setItem('id', user.id);
+    localStorage.setItem('email', user.email);
+    localStorage.setItem('name', user.name);
+    localStorage.setItem('picture', user.picture);
   }
 
   // using function as a child pattern in order to get the context inside the component
@@ -29,7 +36,10 @@ var Login = props => {
             <Modal>
               <div>
                 <h1>Join the Catalog community</h1>
-                <Facebook closeModal={closeModal} />
+                <Facebook
+                  closeModal={closeModal}
+                  localStorage={saveInfoInLocalStorage}
+                />
                 <Google closeModal={closeModal} />
                 <button onClick={closeModal}>Close</button>
               </div>

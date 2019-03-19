@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Router } from '@reach/router';
 import Login from './components/registration/login';
@@ -12,6 +12,21 @@ import ItemCreate from './components/catalog/items/item-create';
 
 const App = () => {
   const user = useState(UserContext);
+
+  useEffect(() => {
+    if (localStorage.length) {
+      let u = {
+        id: +localStorage.id,
+        accessToken: localStorage.accessToken,
+        name: localStorage.name,
+        email: localStorage.email,
+        picture: localStorage.picture
+      };
+      user[1](u);
+      console.log('blah', user);
+    }
+    console.log('outside');
+  }, []);
 
   return (
     <UserContext.Provider value={user}>
