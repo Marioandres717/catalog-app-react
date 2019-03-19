@@ -15,17 +15,17 @@ const App = () => {
 
   useEffect(() => {
     if (localStorage.length) {
-      let u = {
+      let storage = {
         id: +localStorage.id,
         accessToken: localStorage.accessToken,
         name: localStorage.name,
         email: localStorage.email,
         picture: localStorage.picture
       };
-      user[1](u);
-      console.log('blah', user);
+
+      let [u, setU] = user;
+      setU(storage);
     }
-    console.log('outside');
   }, []);
 
   return (
