@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import UserContext from '../../../userContext';
 import { Link } from '@reach/router';
 
+// TODO: MAYBE REFACTOR INTO A STATE OF ITEM?? INSTEAD OF INDIVIDUAL PROPERTIES
 const ItemDetails = props => {
-  const { categoryId, itemId } = props;
-  const [name, setName] = useState([]);
-  const [description, setDescription] = useState([]);
-  const [picture, setPicture] = useState([]);
-  const [ownerId, setOwnerId] = useState([]);
+  var { categoryId, itemId } = props;
+  var [name, setName] = useState([]);
+  var [description, setDescription] = useState([]);
+  var [picture, setPicture] = useState([]);
+  var [ownerId, setOwnerId] = useState([]);
 
   useEffect(() => {
     fetchItem(categoryId, itemId).then(item => {
@@ -26,8 +27,29 @@ const ItemDetails = props => {
         method: 'GET'
       }
     );
-    const { item } = await response.json();
+    let { item } = await response.json();
     return item;
+  }
+
+  async function handleDelete() {
+    try {
+      const accessToken = window.FB.getAccessToken();
+      await fetch(
+        `http://localhost:5000/categories/${categoryId}/items/${itemId}`,
+        {
+          method: 'DELETE',
+          mode: 'cors',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+      );
+      console.log('success');
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   return (
@@ -54,7 +76,7 @@ const ItemDetails = props => {
               >
                 <button>Edit</button>
               </Link>
-              <button>Delete</button>
+              <button onClick={handleDelete}>Delete</button>
             </div>
           ) : null}
         </div>
