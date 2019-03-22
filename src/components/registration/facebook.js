@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import UserContext from '../../userContext';
+import retrieveCookies from '../utils/cookieRetriever';
 
 const Facebook = props => {
   // eslint-disable-next-line no-unused-vars
@@ -14,16 +15,21 @@ const Facebook = props => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            accept: 'application/json',
             Authorization: `Bearer ${response.accessToken}`
-          }
+          },
+          credentials: 'include'
         });
         let userID = await result.json();
+        const cookies = retrieveCookies();
         let u = {
           id: userID,
           name: response.name,
           email: response.email,
           picture: response.picture.data.url,
-          accessToken: response.accessToken
+          fbAccessToken: response.accessToken,
+          csrfAccessToken: cookies['csrf_access_token'],
+          csrfRefreshToken: cookies['csrf_refresh_token']
         };
         setUser(u);
         closeModal();

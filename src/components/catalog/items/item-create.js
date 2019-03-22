@@ -12,24 +12,27 @@ const ItemCreate = props => {
 
   async function addItem() {
     try {
-      const accessToken = user.accessToken;
-      await fetch(`http://localhost:5000/categories/${categoryId}/items`, {
-        method: 'POST',
-        mode: 'cors',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`
-        },
-        body: JSON.stringify({
-          name,
-          description,
-          picture,
-          categoryId,
-          userId: user.id
-        })
-      });
-      console.log('successfully Created');
+      let resp = await fetch(
+        `http://localhost:5000/categories/${categoryId}/items`,
+        {
+          method: 'POST',
+          mode: 'cors',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            accept: 'application/json',
+            'X-CSRF-TOKEN': user.csrfAccessToken
+          },
+          body: JSON.stringify({
+            name,
+            description,
+            picture,
+            categoryId
+          })
+        }
+      );
+      let data = await resp.json();
+      console.log(data);
     } catch (e) {
       console.error(e);
     }
@@ -37,27 +40,27 @@ const ItemCreate = props => {
 
   async function editItem() {
     try {
-      const accessToken = user.accessToken;
-      await fetch(
+      let resp = await fetch(
         `http://localhost:5000/categories/${categoryId}/items/${item.itemId}`,
         {
           method: 'PUT',
           mode: 'cors',
-          credentials: 'same-origin',
+          credentials: 'include',
           headers: {
             'content-type': 'application/json',
-            Authorization: `Bearer ${accessToken}`
+            accept: 'application/json',
+            'X-CSRF-TOKEN': user.csrfAccessToken
           },
           body: JSON.stringify({
             name,
             picture,
             description,
-            categoryId,
-            userId: user.id
+            categoryId
           })
         }
       );
-      console.log('successfully change');
+      let data = await resp.json();
+      console.log(data);
     } catch (e) {
       console.error(e);
     }

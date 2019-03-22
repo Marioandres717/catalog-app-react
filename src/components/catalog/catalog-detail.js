@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import { Link } from '@reach/router';
 
+// eslint-disable-next-line no-unused-vars
 const styles = theme => ({
   root: {
     border: '5px solid black',

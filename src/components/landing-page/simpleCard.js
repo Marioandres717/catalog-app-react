@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Link } from '@reach/router';
 
+// eslint-disable-next-line no-unused-vars
 const styles = theme => ({
   card: {
     maxWidth: 400

@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import SimpleCard from './simpleCard';
 import CarouselContainer from './carousel-container';
 
+// eslint-disable-next-line no-unused-vars
 const styles = theme => ({
   root: {
     flexgrow: 1,

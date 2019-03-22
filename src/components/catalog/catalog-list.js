@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CatalogDetail from './catalog-detail';
 
+// eslint-disable-next-line no-unused-vars
 const styles = theme => ({
   root: {
     maxWidth: '87vw',

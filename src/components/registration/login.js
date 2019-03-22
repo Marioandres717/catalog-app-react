@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Facebook from './facebook';
-import Google from './google';
+// import Google from './google';
 import UserContext from '../../userContext';
 import Modal from '../../modal';
 
+// eslint-disable-next-line no-unused-vars
 var Login = props => {
   var [showModal, setModal] = useState(false);
   function toggleModal() {
@@ -15,11 +16,13 @@ var Login = props => {
   }
 
   function saveInfoInLocalStorage(user) {
-    localStorage.setItem('accessToken', user.accessToken);
+    localStorage.setItem('accessToken', user.fbAccessToken);
     localStorage.setItem('id', user.id);
     localStorage.setItem('email', user.email);
     localStorage.setItem('name', user.name);
     localStorage.setItem('picture', user.picture);
+    localStorage.setItem('csrfAccessToken', user.csrfAccessToken);
+    localStorage.setItem('csrfRefreshToken', user.csrfRefreshToken);
   }
 
   // using function as a child pattern in order to get the context inside the component
@@ -40,7 +43,7 @@ var Login = props => {
                   closeModal={closeModal}
                   localStorage={saveInfoInLocalStorage}
                 />
-                <Google closeModal={closeModal} />
+                {/* <Google closeModal={closeModal} /> */}
                 <button onClick={closeModal}>Close</button>
               </div>
             </Modal>

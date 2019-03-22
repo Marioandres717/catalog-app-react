@@ -31,22 +31,21 @@ const ItemDetails = props => {
     return item;
   }
 
-  async function handleDelete() {
+  async function handleDelete(user) {
     try {
-      const accessToken = window.FB.getAccessToken();
       await fetch(
         `http://localhost:5000/categories/${categoryId}/items/${itemId}`,
         {
           method: 'DELETE',
           mode: 'cors',
-          credentials: 'same-origin',
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`
+            'X-CSRF-TOKEN': user.csrfAccessToken
           }
         }
       );
-      console.log('success');
+      console.log('SUCCESSFULLY DELETED');
     } catch (e) {
       console.error(e);
     }
@@ -76,7 +75,7 @@ const ItemDetails = props => {
               >
                 <button>Edit</button>
               </Link>
-              <button onClick={handleDelete}>Delete</button>
+              <button onClick={() => handleDelete(user[0])}>Delete</button>
             </div>
           ) : null}
         </div>

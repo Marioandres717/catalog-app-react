@@ -6,7 +6,9 @@ const UserContext = React.createContext([
     name: '',
     email: '',
     picture: '',
-    access_token: ''
+    fbAccessToken: '',
+    csrfAccessToken: '',
+    csrfRefreshToken: ''
   },
   () => {}
 ]);

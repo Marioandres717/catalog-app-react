@@ -20,7 +20,9 @@ const App = () => {
         accessToken: localStorage.accessToken,
         name: localStorage.name,
         email: localStorage.email,
-        picture: localStorage.picture
+        picture: localStorage.picture,
+        csrfAccessToken: localStorage.csrfAccessToken,
+        csrfRefreshToken: localStorage.csrfRefreshToken
       };
 
       let setU = user[1];
