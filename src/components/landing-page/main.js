@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SimpleCard from './simpleCard';
 import CarouselContainer from './carousel-container';
+import { home } from '../utils/urlBuilder';
 
 // eslint-disable-next-line no-unused-vars
 const styles = theme => ({
@@ -20,22 +21,18 @@ const styles = theme => ({
 
 var Main = props => {
   var [categories, setCategories] = useState([]);
-  var [items, setItems] = useState([]);
   var { classes } = props;
-
-  var url = 'http://localhost:5000/';
 
   useEffect(() => {
     fetchHomeContent().then(data => {
-      let { categories, items } = data;
+      let { categories } = data;
       setCategories(categories);
-      setItems(items);
     });
   }, []);
 
   async function fetchHomeContent() {
     try {
-      const response = await fetch(url);
+      const response = await fetch(home());
       const data = await response.json();
       return data;
     } catch (err) {
@@ -65,7 +62,7 @@ var Main = props => {
       <Grid container spacing={24} className={classes.root}>
         {categories.map(category => (
           <CarouselContainer
-            items={items}
+            items={category.items}
             category={category.name}
             key={category.id}
           />
