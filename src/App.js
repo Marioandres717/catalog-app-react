@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { Router } from '@reach/router';
 import Login from './components/registration/login';
 import CatalogList from './components/catalog/catalog-list';
@@ -32,6 +33,7 @@ const App = () => {
 
   return (
     <UserContext.Provider value={user}>
+      <CssBaseline />
       <div className="App">
         <NavBar />
         <Router>
