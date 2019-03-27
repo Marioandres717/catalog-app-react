@@ -7,13 +7,11 @@ import Modal from '../../modal';
 var Login = () => {
   var [showModal, setModal] = useState(false);
   var { user, saveInfoInLocalstorage } = useContext(UserContext);
+
   function toggleModal() {
     setModal(!showModal);
   }
 
-  function closeModal() {
-    setModal(false);
-  }
   return (
     <div>
       {user.id != null ? (
@@ -26,11 +24,11 @@ var Login = () => {
           <div>
             <h1>Join the Catalog community</h1>
             <Facebook
-              closeModal={closeModal}
+              setModal={setModal}
               localstorage={saveInfoInLocalstorage}
             />
             {/* <Google closeModal={closeModal} /> */}
-            <button onClick={closeModal}>Close</button>
+            <button onClick={() => setModal(false)}>Close</button>
           </div>
         </Modal>
       ) : null}

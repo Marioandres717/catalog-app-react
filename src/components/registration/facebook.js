@@ -6,12 +6,12 @@ import { fbConnect } from '../utils/urlBuilder';
 
 const Facebook = props => {
   var { setUser } = useContext(UserContext);
-  var { closeModal, localstorage } = props;
+  var { setModal, localstorage } = props;
 
   async function handleLogin(response) {
     try {
       if (response.accessToken) {
-        let result = await fetch(fbConnect, {
+        let result = await fetch(fbConnect(), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ const Facebook = props => {
           csrfRefreshToken: cookies['csrf_refresh_token']
         };
         setUser(u);
-        closeModal();
+        setModal(false);
         localstorage(u);
       }
     } catch (e) {
