@@ -2,16 +2,16 @@ import React, { useContext } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import UserContext from '../../userContext';
 import retrieveCookies from '../utils/cookieRetriever';
+import { fbConnect } from '../utils/urlBuilder';
 
 const Facebook = props => {
-  // eslint-disable-next-line no-unused-vars
   var { setUser } = useContext(UserContext);
   var { closeModal, localstorage } = props;
 
   async function handleLogin(response) {
     try {
       if (response.accessToken) {
-        let result = await fetch('http://localhost:5000/fbconnect', {
+        let result = await fetch(fbConnect, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

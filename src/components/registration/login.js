@@ -14,8 +14,6 @@ var Login = () => {
   function closeModal() {
     setModal(false);
   }
-
-  // using function as a child pattern in order to get the context inside the component
   return (
     <div>
       {user.id != null ? (

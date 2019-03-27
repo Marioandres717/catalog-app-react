@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 

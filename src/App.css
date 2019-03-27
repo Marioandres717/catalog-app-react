@@ -1,4 +1,8 @@
-.App {
+body {
+  background: url('./topography.svg'), linear-gradient(110deg, #f93d66, #6d47d9);
+}
+
+/* .App {
   display: grid;
 }
 
@@ -22,6 +26,20 @@
 }
 
 .item-picture {
+  width: 100%;
+}
+
+.item-detail {
+  background-color: whitesmoke;
+  min-width: 500px;
+  text-align: center;
+}
+
+.item-detail .item-picture {
+  max-width: 150px;
+}
+
+.item-detail .item-picture img {
   width: 100%;
 }
 
@@ -78,32 +96,4 @@
   padding: 15px;
   border-radius: 5px;
   text-align: center;
-}
-
-.item-detail {
-  background-color: whitesmoke;
-  min-width: 500px;
-  text-align: center;
-}
-
-.item-detail .item-picture {
-  max-width: 150px;
-}
-
-.item-detail .item-picture img {
-  width: 100%;
-}
-
-.item-form {
-  display: flex;
-  max-width: 500px;
-  margin: 10px;
-  flex-direction: column;
-}
-
-.item-form > input,
-.item-form > textarea {
-  padding: 5px;
-  border-radius: 5px;
-  margin: 10px;
-}
+} */

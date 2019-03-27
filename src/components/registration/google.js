@@ -9,7 +9,7 @@ export default class Google extends Component {
     email: '',
     picture: ''
   };
-  responseGoogle = (response) => {
+  responseGoogle = response => {
     console.log(response);
     const profile = response.getBasicProfile();
     // console.log(profile);
@@ -21,7 +21,7 @@ export default class Google extends Component {
         name: profile.getName(),
         picture: profile.getImageUrl()
       },
-      (state) => {
+      () => {
         console.log(this.state);
       }
     );
@@ -37,7 +37,8 @@ export default class Google extends Component {
             margin: 'auto',
             background: '#f4f4f4',
             padding: '20px'
-          }}>
+          }}
+        >
           <img src={this.state.picture} alt={this.state.name} />
           <h2>Welcome {this.state.name}</h2>
           Email: {this.state.email}
