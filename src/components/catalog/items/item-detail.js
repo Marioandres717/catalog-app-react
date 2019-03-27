@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import UserContext from '../../../userContext';
-import { Link } from '@reach/router';
+import { Link, navigate } from '@reach/router';
 
 // TODO: MAYBE REFACTOR INTO A STATE OF ITEM?? INSTEAD OF INDIVIDUAL PROPERTIES
 const ItemDetails = props => {
@@ -47,6 +47,7 @@ const ItemDetails = props => {
         }
       );
       console.log('SUCCESSFULLY DELETED');
+      navigate(`/categories/${categoryId}/items`);
     } catch (e) {
       console.error(e);
     }

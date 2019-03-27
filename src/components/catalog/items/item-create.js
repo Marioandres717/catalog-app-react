@@ -1,15 +1,22 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import UserContext from '../../../userContext';
+import { navigate } from '@reach/router';
 
 const ItemCreate = props => {
   const { categoryId, location } = props;
   const { user } = useContext(UserContext);
-  const { item } = location.state;
+  const { item } = location.state || {};
   const [name, setName] = useState(item != null ? item.name : []);
   const [description, setDescription] = useState(
     item != null ? item.description : []
   );
   const [picture, setPicture] = useState(item != null ? item.picture : []);
+
+  useEffect(() => {
+    if (!user.id) {
+      navigate('/');
+    }
+  }, []);
 
   async function addItem() {
     try {
@@ -33,7 +40,8 @@ const ItemCreate = props => {
         }
       );
       let data = await resp.json();
-      console.log(data);
+      console.log('Sucessfully created!', data);
+      navigate(`/categories/${categoryId}/items`);
     } catch (e) {
       console.error(e);
     }
@@ -61,7 +69,8 @@ const ItemCreate = props => {
         }
       );
       let data = await resp.json();
-      console.log(data);
+      console.log('Sucessfully Edited!', data);
+      navigate(`/categories/${categoryId}/items`);
     } catch (e) {
       console.error(e);
     }

@@ -55,10 +55,9 @@ function useUserLocalstorage() {
 }
 
 const App = () => {
-  const localstorageHook = useUserLocalstorage();
-
+  const userHook = useUserLocalstorage();
   return (
-    <UserContext.Provider value={localstorageHook}>
+    <UserContext.Provider value={userHook}>
       <CssBaseline />
       <div className="App">
         <NavBar />
