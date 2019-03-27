@@ -56,7 +56,7 @@ const ItemDetails = props => {
   return (
     <div className="item-detail">
       <h1>
-        {name} - {props.itemId}
+        {name} - {itemId}
       </h1>
       <h2>{description}</h2>
       <div className="item-picture">

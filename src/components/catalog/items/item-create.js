@@ -1,29 +1,35 @@
 import React, { useState, useContext, useEffect } from 'react';
 import UserContext from '../../../userContext';
 import { navigate } from '@reach/router';
+import { editItem, addItem } from '../../utils/urlBuilder';
 
 const ItemCreate = props => {
   const { categoryId, location } = props;
   const { user } = useContext(UserContext);
-  const { item } = location.state || {};
+  const { item } = location.state.item
+    ? location.state
+    : { item: { itemId: '', name: '', description: '', picture: '' } };
+
   const [name, setName] = useState(item != null ? item.name : []);
   const [description, setDescription] = useState(
     item != null ? item.description : []
   );
   const [picture, setPicture] = useState(item != null ? item.picture : []);
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     if (!user.id) {
-      navigate('/');
+      navigate(`/categories/${categoryId}/items`);
     }
   }, []);
 
-  async function addItem() {
+  async function submitItem() {
     try {
+      setSubmitted(true);
       let resp = await fetch(
-        `http://localhost:5000/categories/${categoryId}/items`,
+        item.itemId ? editItem(categoryId, item.itemId) : addItem(categoryId),
         {
-          method: 'POST',
+          method: item.itemId ? 'PUT' : 'POST',
           mode: 'cors',
           credentials: 'include',
           headers: {
@@ -40,39 +46,11 @@ const ItemCreate = props => {
         }
       );
       let data = await resp.json();
-      console.log('Sucessfully created!', data);
+      console.log('Sucessful!', data);
       navigate(`/categories/${categoryId}/items`);
     } catch (e) {
       console.error(e);
-    }
-  }
-
-  async function editItem() {
-    try {
-      let resp = await fetch(
-        `http://localhost:5000/categories/${categoryId}/items/${item.itemId}`,
-        {
-          method: 'PUT',
-          mode: 'cors',
-          credentials: 'include',
-          headers: {
-            'content-type': 'application/json',
-            accept: 'application/json',
-            'X-CSRF-TOKEN': user.csrfAccessToken
-          },
-          body: JSON.stringify({
-            name,
-            picture,
-            description,
-            categoryId
-          })
-        }
-      );
-      let data = await resp.json();
-      console.log('Sucessfully Edited!', data);
-      navigate(`/categories/${categoryId}/items`);
-    } catch (e) {
-      console.error(e);
+      setSubmitted(true);
     }
   }
 
@@ -90,7 +68,10 @@ const ItemCreate = props => {
           type="text"
           name="item-name"
           id="name"
-          onChange={e => setName(e.target.value)}
+          onChange={e => {
+            setSubmitted(false);
+            setName(e.target.value);
+          }}
           placeholder={item != null ? item.name : 'Enter Name'}
         />
         <label htmlFor="item-description">Description:</label>
@@ -99,7 +80,10 @@ const ItemCreate = props => {
           id="description"
           cols="30"
           rows="5"
-          onChange={e => setDescription(e.target.value)}
+          onChange={e => {
+            setSubmitted(false);
+            setDescription(e.target.value);
+          }}
           placeholder={item != null ? item.description : 'Enter Description'}
         />
         <label htmlFor="item-picture">Picture:</label>
@@ -107,11 +91,13 @@ const ItemCreate = props => {
           type="text"
           name="item-picture"
           id="picture"
-          onChange={e => setPicture(e.target.value)}
+          onChange={e => {
+            setSubmitted(false);
+            setPicture(e.target.value);
+          }}
           placeholder={item != null ? item.picture : 'Enter picture Url'}
         />
-
-        <button onClick={item != null ? editItem : addItem} type="submit">
+        <button disabled={submitted} onClick={submitItem} type="submit">
           Save
         </button>
       </form>
