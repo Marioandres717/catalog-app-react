@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import UserContext from '../../../userContext';
 import { Link } from '@reach/router';
 
 // TODO: MAYBE REFACTOR INTO A STATE OF ITEM?? INSTEAD OF INDIVIDUAL PROPERTIES
 const ItemDetails = props => {
   var { categoryId, itemId } = props;
+  var { user } = useContext(UserContext);
   var [name, setName] = useState([]);
   var [description, setDescription] = useState([]);
   var [picture, setPicture] = useState([]);
@@ -31,7 +32,7 @@ const ItemDetails = props => {
     return item;
   }
 
-  async function handleDelete(user) {
+  async function handleDelete() {
     try {
       await fetch(
         `http://localhost:5000/categories/${categoryId}/items/${itemId}`,
@@ -52,35 +53,30 @@ const ItemDetails = props => {
   }
 
   return (
-    <UserContext.Consumer>
-      {user => (
-        <div className="item-detail">
-          <h1>
-            {name} - {props.itemId}
-          </h1>
-          <h2>{description}</h2>
-          <div className="item-picture">
-            <img src={picture} alt={name} />
-          </div>
-          <button>Buy</button>
-          {user[0].id != null ? <button>Add to WishList</button> : null}
-          {user[0].id === ownerId ? (
-            <div>
-              <Link
-                to={`/categories/${categoryId}/additems`}
-                state={{
-                  user: user[0],
-                  item: { itemId, name, description, picture }
-                }}
-              >
-                <button>Edit</button>
-              </Link>
-              <button onClick={() => handleDelete(user[0])}>Delete</button>
-            </div>
-          ) : null}
+    <div className="item-detail">
+      <h1>
+        {name} - {props.itemId}
+      </h1>
+      <h2>{description}</h2>
+      <div className="item-picture">
+        <img src={picture} alt={name} />
+      </div>
+      <button>Buy</button>
+      {user.id != null ? <button>Add to WishList</button> : null}
+      {user.id === ownerId ? (
+        <div>
+          <Link
+            to={`/categories/${categoryId}/additems`}
+            state={{
+              item: { itemId, name, description, picture }
+            }}
+          >
+            <button>Edit</button>
+          </Link>
+          <button onClick={handleDelete}>Delete</button>
         </div>
-      )}
-    </UserContext.Consumer>
+      ) : null}
+    </div>
   );
 };
 

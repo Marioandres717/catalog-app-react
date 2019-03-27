@@ -1,16 +1,5 @@
 import React from 'react';
 
-const UserContext = React.createContext([
-  {
-    id: null,
-    name: '',
-    email: '',
-    picture: '',
-    fbAccessToken: '',
-    csrfAccessToken: '',
-    csrfRefreshToken: ''
-  },
-  () => {}
-]);
+const UserContext = React.createContext();
 
 export default UserContext;

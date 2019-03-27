@@ -5,8 +5,8 @@ import retrieveCookies from '../utils/cookieRetriever';
 
 const Facebook = props => {
   // eslint-disable-next-line no-unused-vars
-  var [user, setUser] = useContext(UserContext);
-  var { closeModal, localStorage } = props;
+  var { setUser } = useContext(UserContext);
+  var { closeModal, localstorage } = props;
 
   async function handleLogin(response) {
     try {
@@ -33,7 +33,7 @@ const Facebook = props => {
         };
         setUser(u);
         closeModal();
-        localStorage(u);
+        localstorage(u);
       }
     } catch (e) {
       console.error(e);

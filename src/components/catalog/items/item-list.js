@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from '@reach/router';
 import UserContext from '../../../userContext';
 
@@ -7,6 +7,7 @@ const ItemList = props => {
   var [items, setItems] = useState([
     { id: '', name: '', description: '', picture: '' }
   ]);
+  var { user } = useContext(UserContext);
 
   useEffect(() => {
     fetchItems().then(items => {
@@ -40,18 +41,11 @@ const ItemList = props => {
           </div>
         </Link>
       ))}
-      <UserContext.Consumer>
-        {user =>
-          user[0].id != null ? (
-            <Link
-              to={`/categories/${categoryId}/additems`}
-              state={{ user: user[0] }}
-            >
-              <button>Add Item</button>
-            </Link>
-          ) : null
-        }
-      </UserContext.Consumer>
+      {user.id != null ? (
+        <Link to={`/categories/${categoryId}/additems`}>
+          <button>Add Item</button>
+        </Link>
+      ) : null}
     </div>
   );
 };

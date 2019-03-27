@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import UserContext from '../../../userContext';
 
 const ItemCreate = props => {
   const { categoryId, location } = props;
-  const { user } = location.state;
+  const { user } = useContext(UserContext);
   const { item } = location.state;
   const [name, setName] = useState(item != null ? item.name : []);
   const [description, setDescription] = useState(

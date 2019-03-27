@@ -11,12 +11,24 @@ import UserContext from './userContext';
 import ItemDetails from './components/catalog/items/item-detail';
 import ItemCreate from './components/catalog/items/item-create';
 
-const App = () => {
-  const user = useState(UserContext);
+function useUserLocalstorage() {
+  const [user, setUser] = useState({
+    id: null,
+    name: '',
+    email: '',
+    picture: '',
+    fbAccessToken: '',
+    csrfAccessToken: '',
+    csrfRefreshToken: ''
+  });
 
   useEffect(() => {
+    fetchUserFromLocalstorage();
+  }, []);
+
+  function fetchUserFromLocalstorage() {
     if (localStorage.length) {
-      let storage = {
+      let data = {
         id: +localStorage.id,
         accessToken: localStorage.accessToken,
         name: localStorage.name,
@@ -25,14 +37,28 @@ const App = () => {
         csrfAccessToken: localStorage.csrfAccessToken,
         csrfRefreshToken: localStorage.csrfRefreshToken
       };
-
-      let setU = user[1];
-      setU(storage);
+      setUser(data);
     }
-  }, []);
+  }
+
+  function saveInfoInLocalstorage(user) {
+    localStorage.setItem('accessToken', user.fbAccessToken);
+    localStorage.setItem('id', user.id);
+    localStorage.setItem('email', user.email);
+    localStorage.setItem('name', user.name);
+    localStorage.setItem('picture', user.picture);
+    localStorage.setItem('csrfAccessToken', user.csrfAccessToken);
+    localStorage.setItem('csrfRefreshToken', user.csrfRefreshToken);
+  }
+
+  return { user, setUser, fetchUserFromLocalstorage, saveInfoInLocalstorage };
+}
+
+const App = () => {
+  const localstorageHook = useUserLocalstorage();
 
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider value={localstorageHook}>
       <CssBaseline />
       <div className="App">
         <NavBar />
