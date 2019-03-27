@@ -26,16 +26,17 @@ const styles = theme => ({
 });
 
 var CarouselContainer = props => {
-  const { classes, items, category } = props;
+  const { classes, category } = props;
+  const { id, name, items } = category;
   return (
     <Grid item xs={12} className={classes.carousel}>
       <div className={classes.category}>
-        <h2>{category}</h2>
-        <Link to="/catalog" className={classes.link}>
+        <h2>{name}</h2>
+        <Link to={`/categories/${id}/items`} className={classes.link}>
           See more
         </Link>
       </div>
-      {items.length > 0 && <Carousel items={items} />}
+      {items.length > 0 && <Carousel categoryId={id} items={items} />}
     </Grid>
   );
 };

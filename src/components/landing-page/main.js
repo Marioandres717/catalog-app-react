@@ -52,6 +52,7 @@ var Main = props => {
         {categories.map(category => (
           <Grid item xs={3} key={category.id} className={classes.card}>
             <SimpleCard
+              id={category.id}
               name={category.name}
               description={category.description}
               picture={category.picture}
@@ -61,11 +62,7 @@ var Main = props => {
       </Grid>
       <Grid container spacing={24} className={classes.root}>
         {categories.map(category => (
-          <CarouselContainer
-            items={category.items}
-            category={category.name}
-            key={category.id}
-          />
+          <CarouselContainer category={category} key={category.id} />
         ))}
       </Grid>
     </div>

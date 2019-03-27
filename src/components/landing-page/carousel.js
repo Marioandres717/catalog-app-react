@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
+import { Link } from '@reach/router';
 
 const styles = theme => ({
   gridList: {
@@ -10,7 +11,7 @@ const styles = theme => ({
     transform: 'translateZ(0)'
   },
   title: {
-    color: theme.palette.primary.light
+    color: '#FFFF'
   },
   titleBar: {
     background:
@@ -19,20 +20,22 @@ const styles = theme => ({
 });
 
 var Carousel = props => {
-  const { classes, items } = props;
+  const { classes, categoryId, items } = props;
 
   return (
     <GridList cols={2.5} className={classes.gridList}>
       {items.map(item => (
         <GridListTile key={item.id}>
           <img src={item.picture} alt={items.name} />
-          <GridListTileBar
-            title={item.name}
-            classes={{
-              root: classes.titleBar,
-              title: classes.title
-            }}
-          />
+          <Link to={`/categories/${categoryId}/items/${item.id}`}>
+            <GridListTileBar
+              title={item.name}
+              classes={{
+                root: classes.titleBar,
+                title: classes.title
+              }}
+            />
+          </Link>
         </GridListTile>
       ))}
     </GridList>

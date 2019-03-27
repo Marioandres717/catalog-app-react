@@ -37,7 +37,7 @@ const styles = theme => ({
 });
 
 var SimpleCard = props => {
-  const { classes, name, picture } = props;
+  const { classes, id, name, picture } = props;
   return (
     <Card className={classes.card}>
       <CardContent>
@@ -51,15 +51,17 @@ var SimpleCard = props => {
         <Typography variant="h5" component="h2">
           {name}
         </Typography>
-        <CardMedia
-          className={classes.media}
-          image={picture}
-          title="mens shoes catalog"
-        />
+        <Link to={`/categories/${id}/items`}>
+          <CardMedia
+            className={classes.media}
+            image={picture}
+            title="mens shoes catalog"
+          />
+        </Link>
       </CardContent>
       <CardActions className={classes.actions} disableActionSpacing>
         <Button size="small">
-          <Link to="/categories" className={classes.link}>
+          <Link to={`/categories/${id}/items`} className={classes.link}>
             Shop now
           </Link>
         </Button>
