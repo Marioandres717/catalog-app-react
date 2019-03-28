@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import { Router } from '@reach/router';
 import Login from './components/registration/login';
 import CatalogList from './components/catalog/catalog-list';
@@ -10,6 +9,8 @@ import ItemList from './components/catalog/items/item-list';
 import UserContext from './userContext';
 import ItemDetails from './components/catalog/items/item-detail';
 import ItemCreate from './components/catalog/items/item-create';
+import Home from './components/home/home';
+import withRoot from './withRoot';
 
 function useUserLocalstorage() {
   const [user, setUser] = useState({
@@ -58,11 +59,11 @@ const App = () => {
   const userHook = useUserLocalstorage();
   return (
     <UserContext.Provider value={userHook}>
-      <CssBaseline />
       <div className="App">
         <NavBar />
         <Router>
           <Main path="/" />
+          <Home path="/home" />
           <Login path="/login" />
           <CatalogList path="/categories" />
           <ItemList path="/categories/:categoryId/items" />
@@ -74,4 +75,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default withRoot(App);
