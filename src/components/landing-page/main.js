@@ -12,10 +12,6 @@ const styles = theme => ({
     maxWidth: 1600,
     minHeight: 600,
     margin: '0 auto'
-  },
-  bckgImg: {
-    background:
-      'url(https://images.unsplash.com/photo-1545119560-8db36a735ee2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80)'
   }
 });
 

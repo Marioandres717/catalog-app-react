@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
 import { Router } from '@reach/router';
 import Login from './components/registration/login';
 import CatalogList from './components/catalog/catalog-list';
@@ -11,6 +10,18 @@ import ItemDetails from './components/catalog/items/item-detail';
 import ItemCreate from './components/catalog/items/item-create';
 import Home from './components/home/home';
 import withRoot from './withRoot';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+  app: {
+    backgroundColor: theme.palette.background.main,
+    color: theme.palette.onBackground.main,
+    height: '100%',
+    fontFamily: 'Roboto',
+    margin: 0,
+    paddingTop: '0.1px'
+  }
+});
 
 function useUserLocalstorage() {
   const [user, setUser] = useState({
@@ -55,11 +66,12 @@ function useUserLocalstorage() {
   return { user, setUser, fetchUserFromLocalstorage, saveInfoInLocalstorage };
 }
 
-const App = () => {
-  const userHook = useUserLocalstorage();
+const App = props => {
+  var { classes } = props;
+  var userHook = useUserLocalstorage();
   return (
     <UserContext.Provider value={userHook}>
-      <div className="App">
+      <div className={classes.app}>
         <NavBar />
         <Router>
           <Main path="/" />
@@ -75,4 +87,4 @@ const App = () => {
   );
 };
 
-export default withRoot(App);
+export default withRoot(withStyles(styles)(App));
