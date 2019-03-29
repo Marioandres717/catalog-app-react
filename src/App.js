@@ -15,11 +15,10 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = theme => ({
   app: {
     backgroundColor: theme.palette.background.main,
-    color: theme.palette.onBackground.main,
-    height: '100%',
-    fontFamily: 'Roboto',
+    color: theme.palette.default.main,
     margin: 0,
-    paddingTop: '0.1px'
+    paddingTop: '0.1px',
+    minHeight: '100vh'
   }
 });
 

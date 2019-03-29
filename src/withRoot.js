@@ -8,44 +8,29 @@ import {
   jssPreset
 } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import red from '@material-ui/core/colors/red';
+import blue from '@material-ui/core/colors/blue';
 
 const themeA = {
   primary: {
-    light: '#ffd869',
-    main: '#ffcf44',
-    dark: '#b2902f',
-    contrastText: '#000'
+    main: '#ffcf44'
   },
-  onPrimary: {
-    light: '#5b5b63',
-    main: '#33333d',
-    dark: '#23232a',
-    contrastText: '#fff'
+  textPrimary: {
+    main: '#33333d'
   },
   secondary: {
-    light: '#ffd869',
-    main: '#ffcf44',
-    dark: '#b2902f',
-    contrastText: '#000'
+    main: '#c46024'
   },
-  onSecondary: {
-    light: '#ffffff',
-    main: '#FFFFFF',
-    dark: '#b2b2b2',
-    contrastText: '#000'
+  textSecondary: {
+    main: blue
+  },
+  default: {
+    main: '#FFFFFF'
   },
   background: {
-    light: '#5b5b63',
-    main: '#33333d',
-    dark: '#23232a',
-    contrastText: '#fff'
+    main: '#33333d'
   },
-  onBackground: {
-    light: '#ffffff',
-    main: '#FFFFFF',
-    dark: '#b2b2b2',
-    contrastText: '#000'
-  }
+  error: red
 };
 
 // A theme with custom primary and secondary color.
@@ -53,7 +38,30 @@ const themeA = {
 const theme = createMuiTheme({
   palette: themeA,
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"'
+    ].join(','),
+    fontWeightMedium: 500,
+    body1: {
+      fontWeight: 500
+    },
+    subtitle1: {
+      fontSize: 12
+    },
+    button: {
+      fontStyle: 'italic'
+    }
   }
 });
 

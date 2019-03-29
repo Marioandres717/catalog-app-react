@@ -8,10 +8,7 @@ import { home } from '../utils/urlBuilder';
 // eslint-disable-next-line no-unused-vars
 const styles = theme => ({
   root: {
-    flexgrow: 1,
-    maxWidth: 1600,
-    minHeight: 600,
-    margin: '0 auto'
+    flexgrow: 1
   }
 });
 
