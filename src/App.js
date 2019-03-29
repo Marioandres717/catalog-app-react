@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Router } from '@reach/router';
 import Login from './components/registration/login';
 import CatalogList from './components/catalog/catalog-list';
-import NavBar from './components/navigation/navbar';
 import Main from './components/landing-page/main';
 import ItemList from './components/catalog/items/item-list';
 import UserContext from './userContext';
@@ -71,7 +70,6 @@ const App = props => {
   return (
     <UserContext.Provider value={userHook}>
       <div className={classes.app}>
-        <NavBar />
         <Router>
           <Main path="/" />
           <Home path="/home" />
