@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core';
 
 var styles = theme => ({
   brand: {
-    fill: theme.palette.primary.main,
+    fill: theme.palette.default.main,
     width: '48px',
     padding: '40px 0 0',
     margin: '0 auto'

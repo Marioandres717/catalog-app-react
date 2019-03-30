@@ -6,8 +6,7 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemAvatar,
-  Avatar
+  Divider
 } from '@material-ui/core';
 // import NotAppBar from '../utils/appBar';
 import Brand from '../utils/brand';
@@ -28,7 +27,8 @@ const styles = theme => ({
     color: 'white',
     borderRightWidth: 0,
     zIndex: 0,
-    width: defaultWidth
+    width: defaultWidth,
+    textTransform: 'uppercase'
   },
   toolbar: theme.mixins.toolbar,
   logo: {
@@ -41,20 +41,33 @@ const styles = theme => ({
   listItem: {
     borderRadius: '6px',
     textAlign: 'center',
+    margin: '5px',
     '&:focus': {
-      backgroundColor: theme.palette.primary.main,
-      opacity: '0.37',
-      color: theme.palette.textPrimary.main
+      backgroundColor: theme.palette.default.main,
+      opacity: '0.3',
+      color: theme.palette.background.main
     },
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.textPrimary.main,
-      opacity: '0.9'
+      backgroundColor: theme.palette.default.main,
+      color: theme.palette.background.main,
+      opacity: '0.1'
     }
   },
   listAvatar: {
     marginLeft: '100px',
     padding: '500px'
+  },
+  text: {
+    padding: '0 8px'
+  },
+  divider: {
+    backgroundColor: theme.palette.primary.main,
+    width: '50px',
+    height: '2px',
+    display: 'block',
+    position: 'relative',
+    top: '-8px',
+    left: '100px'
   }
 });
 
@@ -88,11 +101,24 @@ const Home = props => {
       >
         <div className={classes.logo}>
           <Brand />
-          <Typography variant="h6" component="h5" color="primary">
+          <Typography variant="h6" component="h5" color="inherit">
             DEUX
           </Typography>
         </div>
         <List classes={{ root: classes.list }}>
+          <ListItem button key="features" classes={{ root: classes.listItem }}>
+            <ListItemText>
+              <Typography
+                color="inherit"
+                component="li"
+                variant="body1"
+                classes={{ root: classes.text }}
+              >
+                Featured
+              </Typography>
+            </ListItemText>
+          </ListItem>
+          <Divider classes={{ root: classes.divider }} />
           {categories.map(category => (
             <ListItem
               button
@@ -100,7 +126,12 @@ const Home = props => {
               classes={{ root: classes.listItem }}
             >
               <ListItemText>
-                <Typography color="inherit" component="li">
+                <Typography
+                  color="inherit"
+                  component="li"
+                  variant="body1"
+                  classes={{ root: classes.text }}
+                >
                   {category.name}
                 </Typography>
               </ListItemText>
@@ -112,17 +143,18 @@ const Home = props => {
             classes={{ root: classes.listItem }}
           >
             <Fragment>
-              <ListItemAvatar classes={{ root: classes.listAvatar }}>
+              {/* <ListItemAvatar classes={{ root: classes.listAvatar }}>
                 <Avatar
                   alt="me"
                   src={user.picture ? user.picture : undefined}
                 />
-              </ListItemAvatar>
+              </ListItemAvatar> */}
               <ListItemText>
                 <Typography
-                  classes={{ root: classes.username }}
+                  classes={{ root: classes.text }}
                   color="inherit"
                   component="li"
+                  variant="body1"
                 >
                   {firstname}
                 </Typography>
