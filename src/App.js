@@ -10,6 +10,7 @@ import ItemCreate from './components/catalog/items/item-create';
 import Home from './components/home/home';
 import withRoot from './withRoot';
 import { withStyles } from '@material-ui/core/styles';
+import Gallery from './components/utils/gallery';
 
 const styles = theme => ({
   app: {
@@ -17,7 +18,9 @@ const styles = theme => ({
     color: theme.palette.default.main,
     margin: 0,
     paddingTop: '0.1px',
-    minHeight: '100vh'
+    minHeight: '100vh',
+    display: 'grid',
+    gridTemplateColumns: '256px 1fr'
   }
 });
 
@@ -70,9 +73,10 @@ const App = props => {
   return (
     <UserContext.Provider value={userHook}>
       <div className={classes.app}>
+        <Home />
         <Router>
-          <Main path="/" />
-          <Home path="/home" />
+          <Gallery path="/" />
+          <Main path="/main" />
           <Login path="/login" />
           <CatalogList path="/categories" />
           <ItemList path="/categories/:categoryId/items" />

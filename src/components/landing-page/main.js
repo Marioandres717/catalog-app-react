@@ -17,17 +17,14 @@ var Main = props => {
   var { classes } = props;
 
   useEffect(() => {
-    fetchHomeContent().then(data => {
-      let { categories } = data;
-      setCategories(categories);
-    });
+    fetchHomeContent().then(categories => setCategories(categories));
   }, []);
 
   async function fetchHomeContent() {
     try {
       const response = await fetch(home());
-      const data = await response.json();
-      return data;
+      const { categories } = await response.json();
+      return categories;
     } catch (err) {
       console.error(err);
     }
