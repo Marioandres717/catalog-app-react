@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, Fragment } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Typography,
@@ -24,7 +24,7 @@ const styles = theme => ({
   },
   drawerPaper: {
     backgroundColor: theme.palette.background.main,
-    color: 'white',
+    color: theme.palette.default.main,
     borderRightWidth: 0,
     zIndex: 0,
     width: defaultWidth,
@@ -41,24 +41,16 @@ const styles = theme => ({
   listItem: {
     borderRadius: '6px',
     textAlign: 'center',
-    margin: '5px',
-    '&:focus': {
-      backgroundColor: theme.palette.default.main,
-      opacity: '0.3',
-      color: theme.palette.background.main
-    },
-    '&:hover': {
-      backgroundColor: theme.palette.default.main,
-      color: theme.palette.background.main,
-      opacity: '0.1'
-    }
+    margin: '5px'
   },
   listAvatar: {
     marginLeft: '100px',
     padding: '500px'
   },
   text: {
-    padding: '0 8px'
+    padding: '0 8px',
+    color: theme.palette.default.main,
+    margin: '5px'
   },
   divider: {
     backgroundColor: theme.palette.primary.main,
@@ -107,16 +99,10 @@ const Home = props => {
         </div>
         <List classes={{ root: classes.list }}>
           <ListItem button key="features" classes={{ root: classes.listItem }}>
-            <ListItemText>
-              <Typography
-                color="inherit"
-                component="li"
-                variant="body1"
-                classes={{ root: classes.text }}
-              >
-                Featured
-              </Typography>
-            </ListItemText>
+            <ListItemText
+              primary="Featured"
+              classes={{ primary: classes.text }}
+            />
           </ListItem>
           <Divider classes={{ root: classes.divider }} />
           {categories.map(category => (
@@ -125,16 +111,10 @@ const Home = props => {
               key={category.id}
               classes={{ root: classes.listItem }}
             >
-              <ListItemText>
-                <Typography
-                  color="inherit"
-                  component="li"
-                  variant="body1"
-                  classes={{ root: classes.text }}
-                >
-                  {category.name}
-                </Typography>
-              </ListItemText>
+              <ListItemText
+                primary={category.name}
+                classes={{ primary: classes.text }}
+              />
             </ListItem>
           ))}
           <ListItem
@@ -142,24 +122,16 @@ const Home = props => {
             key={user.id ? user.id : undefined}
             classes={{ root: classes.listItem }}
           >
-            <Fragment>
-              {/* <ListItemAvatar classes={{ root: classes.listAvatar }}>
+            {/* <ListItemAvatar classes={{ root: classes.listAvatar }}>
                 <Avatar
                   alt="me"
                   src={user.picture ? user.picture : undefined}
                 />
               </ListItemAvatar> */}
-              <ListItemText>
-                <Typography
-                  classes={{ root: classes.text }}
-                  color="inherit"
-                  component="li"
-                  variant="body1"
-                >
-                  {firstname}
-                </Typography>
-              </ListItemText>
-            </Fragment>
+            <ListItemText
+              primary={firstname}
+              classes={{ primary: classes.text }}
+            />
           </ListItem>
         </List>
       </Drawer>
