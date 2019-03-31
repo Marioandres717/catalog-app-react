@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Typography,
@@ -8,10 +8,8 @@ import {
   ListItemText,
   Divider
 } from '@material-ui/core';
-// import NotAppBar from '../utils/appBar';
 import Brand from '../utils/brand';
 import UserContext from '../../userContext';
-import { readCategories } from '../utils/urlBuilder';
 
 const defaultWidth = '256px';
 
@@ -64,24 +62,9 @@ const styles = theme => ({
 });
 
 const Home = props => {
-  const { classes } = props;
+  const { classes, categories, handleSelectItemsFromCategory } = props;
   const { user } = useContext(UserContext);
-  const [categories, setCategories] = useState([]);
   const firstname = user.name.split(' ')[0];
-
-  useEffect(() => {
-    fetchData()
-      .then(data => {
-        setCategories(data);
-      })
-      .then(console.log('Successfully retrieved'));
-  }, []);
-
-  async function fetchData() {
-    const response = await fetch(readCategories());
-    const { categories } = await response.json();
-    return categories;
-  }
 
   return (
     <div className={classes.home}>
@@ -110,6 +93,7 @@ const Home = props => {
               button
               key={category.id}
               classes={{ root: classes.listItem }}
+              onClick={() => handleSelectItemsFromCategory(category.id)}
             >
               <ListItemText
                 primary={category.name}

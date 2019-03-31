@@ -11,6 +11,7 @@ import Home from './components/home/home';
 import withRoot from './withRoot';
 import { withStyles } from '@material-ui/core/styles';
 import Gallery from './components/utils/gallery';
+import { home } from './components/utils/urlBuilder';
 
 const styles = theme => ({
   app: {
@@ -67,15 +68,65 @@ function useUserLocalstorage() {
   return { user, setUser, fetchUserFromLocalstorage, saveInfoInLocalstorage };
 }
 
+function useDataFetch() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetchHomeContent().then(data => setData(data));
+  }, []);
+
+  async function fetchHomeContent() {
+    try {
+      const response = await fetch(home());
+      const { categories } = await response.json();
+      return categories;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  return { data, setData, fetchHomeContent };
+}
+
 const App = props => {
   var { classes } = props;
   var userHook = useUserLocalstorage();
+  var dataHook = useDataFetch();
+  var [categories, setCategories] = useState([]);
+  var [items, setItems] = useState([]);
+  var { data } = dataHook;
+
+  useEffect(() => {
+    categoriesNameAndId();
+    console.log('memorry leak');
+  }, [data]);
+
+  function categoriesNameAndId() {
+    var categories = data.map(category => {
+      let temp = {
+        name: category.name,
+        id: category.id
+      };
+      return temp;
+    });
+    setCategories(categories);
+  }
+
+  function itemsFromCategory(id) {
+    var items = data
+      .filter(category => category.id == id)
+      .flatMap(category => category.items);
+    setItems(items);
+  }
+
   return (
     <UserContext.Provider value={userHook}>
       <div className={classes.app}>
-        <Home />
+        <Home
+          categories={categories}
+          handleSelectItemsFromCategory={itemsFromCategory}
+        />
         <Router>
-          <Gallery path="/" />
+          <Gallery path="/" items={items} />
           <Main path="/main" />
           <Login path="/login" />
           <CatalogList path="/categories" />
