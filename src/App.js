@@ -97,7 +97,6 @@ const App = props => {
 
   useEffect(() => {
     categoriesNameAndId();
-    console.log('memorry leak');
   }, [data]);
 
   function categoriesNameAndId() {
