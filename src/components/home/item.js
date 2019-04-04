@@ -11,8 +11,9 @@ import {
 const styles = theme => ({
   base: {
     display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    justifyContent: 'space-around',
+    gridTemplateColumns: 'minMax(220px, 434px) 448.8px',
+    gridTemplateRows: 'minMax(auto, 434px) auto',
+    justifyContent: 'center',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.main,
     padding: '80px 100px 0px',
@@ -36,9 +37,9 @@ const styles = theme => ({
       .spacing.unit * 2}px`
   },
   image: {
-    maxWidht: '737px',
-    maxHeight: '737px'
-  }
+   maxWidth: '100%',
+   maxHeight: '100%'
+  },
 });
 
 const Item = props => {
@@ -46,7 +47,9 @@ const Item = props => {
   const { item } = location.state;
   return (
     <div className={classes.base}>
+      <div>
       <img src={item.picture} alt={item.name} className={classes.image} />
+      </div>
       <div className={classes.root}>
         <div className={classes.section1}>
           <Grid container alignItems="center">

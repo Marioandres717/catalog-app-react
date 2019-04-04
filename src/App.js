@@ -13,6 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Gallery from './components/utils/gallery';
 import { home } from './components/utils/urlBuilder';
 import Item from './components/home/item';
+import NotAppBar from './components/utils/notAppBar'
 
 const styles = theme => ({
   app: {
@@ -125,6 +126,7 @@ const App = props => {
           categories={categories}
           handleSelectItemsFromCategory={itemsFromCategory}
         />
+        <NotAppBar />
         <Router>
           <Gallery path="/" items={items} />
           <Item path="/items/:id" />
