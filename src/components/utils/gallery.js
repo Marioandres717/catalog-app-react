@@ -6,6 +6,7 @@ import {
   GridListTileBar,
   IconButton
 } from '@material-ui/core';
+import { navigate } from '@reach/router';
 
 var styles = theme => ({
   root: {
@@ -40,6 +41,14 @@ const Gallery = props => {
     setIsHover(null);
   }
 
+  function handleBtnClick(item) {
+    navigate(`/items/${item.id}`, {
+      state: {
+        item: item
+      }
+    });
+  }
+
   return (
     <div className={classes.root}>
       <GridList
@@ -62,7 +71,12 @@ const Gallery = props => {
                 title={item.name}
                 subtitle={<span>{item.description}</span>}
                 actionIcon={
-                  <IconButton className={classes.icon}>Buy</IconButton>
+                  <IconButton
+                    className={classes.icon}
+                    onClick={() => handleBtnClick(item)}
+                  >
+                    Buy
+                  </IconButton>
                 }
               />
             )}

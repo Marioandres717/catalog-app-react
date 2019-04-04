@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import Brand from '../utils/brand';
 import UserContext from '../../userContext';
+import { navigate } from '@reach/router';
 
 const defaultWidth = '256px';
 
@@ -81,7 +82,14 @@ const Home = props => {
           </Typography>
         </div>
         <List classes={{ root: classes.list }}>
-          <ListItem button key="features" classes={{ root: classes.listItem }}>
+          <ListItem
+            button
+            key="features"
+            classes={{ root: classes.listItem }}
+            onClick={() => {
+              navigate('/');
+            }}
+          >
             <ListItemText
               primary="Featured"
               classes={{ primary: classes.text }}
@@ -93,7 +101,10 @@ const Home = props => {
               button
               key={category.id}
               classes={{ root: classes.listItem }}
-              onClick={() => handleSelectItemsFromCategory(category.id)}
+              onClick={() => {
+                navigate('/');
+                handleSelectItemsFromCategory(category.id);
+              }}
             >
               <ListItemText
                 primary={category.name}

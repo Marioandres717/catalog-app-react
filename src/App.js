@@ -12,6 +12,7 @@ import withRoot from './withRoot';
 import { withStyles } from '@material-ui/core/styles';
 import Gallery from './components/utils/gallery';
 import { home } from './components/utils/urlBuilder';
+import Item from './components/home/item';
 
 const styles = theme => ({
   app: {
@@ -126,6 +127,7 @@ const App = props => {
         />
         <Router>
           <Gallery path="/" items={items} />
+          <Item path="/items/:id" />
           <Main path="/main" />
           <Login path="/login" />
           <CatalogList path="/categories" />
