@@ -25,7 +25,7 @@ var styles = theme => ({
     color: 'rgba(255, 255, 255, 0.54)'
   },
   onHoverTile: {
-    backgroundColor: '#696969'
+    border: '2px solid #696969'
   }
 });
 
