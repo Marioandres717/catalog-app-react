@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, Fragment } from 'react';
 import Modal from '../../modal';
 import UserContext from '../../userContext';
 import {
@@ -18,46 +18,61 @@ var styles = theme => ({
   text: {
     padding: '0 8px',
     color: theme.palette.default.main,
+    margin: '5px'
+  },
+  loggedIn: {
+    padding: '0 8px',
+    color: theme.palette.default.main,
     margin: '5px',
     textAlign: 'auto'
   }
 });
 
-var Login = props => {
+function Login(props) {
   var { classes } = props;
   var [open, setOpen] = useState(false);
-  var [selectedValue, setSelectedValue] = useState('marioArendon@mail.ca');
-  var { user } = useContext(UserContext);
-  const firstname = user.name.split(' ')[0];
+  var { user, setUser } = useContext(UserContext);
+  const firstname = user.name ? user.name.split(' ')[0] : '';
 
   function handleLogin() {
     setOpen(true);
   }
 
-  const handleClose = value => {
+  function handleClose() {
     setOpen(false);
-    setSelectedValue(value);
-  };
+  }
+
+  function handleLogout() {
+    localStorage.clear();
+    setUser(UserContext);
+  }
 
   return (
-    <div>
+    <Fragment>
       <ListItem
         button
         key={user.id ? user.id : undefined}
         classes={{ root: classes.listItem }}
-        onClick={handleLogin}
+        onClick={user.id ? handleLogout : handleLogin}
       >
-        <ListItemAvatar>
-          <Avatar alt="me" src={user.picture ? user.picture : undefined} />
-        </ListItemAvatar>
+        {user.picture ? (
+          <ListItemAvatar>
+            <Avatar alt="me" src={user.picture ? user.picture : undefined} />
+          </ListItemAvatar>
+        ) : null}
+
         <ListItemText
-          primary={firstname ? firstname : 'Login'}
-          classes={{ primary: classes.text }}
+          primary={firstname ? 'Logout(' + firstname + ')' : 'Login'}
+          classes={
+            user.picture
+              ? { primary: classes.loggedIn }
+              : { primary: classes.text }
+          }
         />
       </ListItem>
-      <Modal selectedValue={selectedValue} open={open} onClose={handleClose} />
-    </div>
+      <Modal open={open} onClose={handleClose} />
+    </Fragment>
   );
-};
+}
 
 export default withStyles(styles)(Login);
