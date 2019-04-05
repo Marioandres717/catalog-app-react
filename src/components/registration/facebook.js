@@ -6,7 +6,7 @@ import { fbConnect } from '../utils/urlBuilder';
 
 const Facebook = props => {
   var { setUser } = useContext(UserContext);
-  var { setModal, localstorage } = props;
+  var { localstorage } = props;
 
   async function handleLogin(response) {
     try {
@@ -32,7 +32,6 @@ const Facebook = props => {
           csrfRefreshToken: cookies['csrf_refresh_token']
         };
         setUser(u);
-        setModal(false);
         localstorage(u);
       }
     } catch (e) {

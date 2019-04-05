@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Typography,
@@ -9,8 +9,8 @@ import {
   Divider
 } from '@material-ui/core';
 import Brand from '../utils/brand';
-import UserContext from '../../userContext';
 import { navigate } from '@reach/router';
+import Login from '../registration/login';
 
 const defaultWidth = '256px';
 
@@ -64,12 +64,9 @@ const styles = theme => ({
 
 const Home = props => {
   const { classes, categories, handleSelectItemsFromCategory } = props;
-  const { user } = useContext(UserContext);
-  const firstname = user.name.split(' ')[0];
 
   return (
     <div className={classes.home}>
-      {/* <NotAppBar /> */}
       <Drawer
         variant="permanent"
         classes={{ root: classes.drawer, paper: classes.drawerPaper }}
@@ -112,22 +109,7 @@ const Home = props => {
               />
             </ListItem>
           ))}
-          <ListItem
-            button
-            key={user.id ? user.id : undefined}
-            classes={{ root: classes.listItem }}
-          >
-            {/* <ListItemAvatar classes={{ root: classes.listAvatar }}>
-                <Avatar
-                  alt="me"
-                  src={user.picture ? user.picture : undefined}
-                />
-              </ListItemAvatar> */}
-            <ListItemText
-              primary={firstname}
-              classes={{ primary: classes.text }}
-            />
-          </ListItem>
+          <Login />
         </List>
       </Drawer>
     </div>
