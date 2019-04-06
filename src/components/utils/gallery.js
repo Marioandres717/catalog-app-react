@@ -15,7 +15,7 @@ var styles = theme => ({
     justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.main,
-    padding: '80px 100px 0px',
+    padding: '80px 100px',
     maxWidth: '82vw'
   },
   gridList: {
