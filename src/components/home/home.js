@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Typography,
@@ -63,7 +63,16 @@ const styles = theme => ({
 });
 
 const Home = props => {
-  const { classes, categories, handleSelectItemsFromCategory } = props;
+  const {
+    classes,
+    categories,
+    handleSelectItemsFromCategory,
+    handleSelectAllItems
+  } = props;
+
+  useEffect(() => {
+    handleSelectAllItems();
+  }, [categories]);
 
   return (
     <div className={classes.home}>
@@ -85,6 +94,7 @@ const Home = props => {
             classes={{ root: classes.listItem }}
             onClick={() => {
               navigate('/');
+              handleSelectAllItems();
             }}
           >
             <ListItemText

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
   GridList,
@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import { navigate } from '@reach/router';
 import ItemForm from '../home/itemForm';
+import UserContext from '../../userContext';
 
 var styles = theme => ({
   root: {
@@ -34,6 +35,7 @@ var styles = theme => ({
 const Gallery = props => {
   var { classes, items } = props;
   var [isHover, setIsHover] = useState(null);
+  var { user } = useContext(UserContext);
 
   function handleOnHover(tileId) {
     setIsHover(tileId);
@@ -84,7 +86,7 @@ const Gallery = props => {
           </GridListTile>
         ))}
       </GridList>
-      <ItemForm />
+      {user.id ? <ItemForm /> : null}
     </div>
   );
 };

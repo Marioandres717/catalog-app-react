@@ -112,6 +112,11 @@ const App = props => {
     setCategories(categories);
   }
 
+  function AllItems() {
+    var items = data.flatMap(arr => arr.items);
+    setItems(items);
+  }
+
   function itemsFromCategory(id) {
     var items = data
       .filter(category => category.id == id)
@@ -125,8 +130,8 @@ const App = props => {
         <Home
           categories={categories}
           handleSelectItemsFromCategory={itemsFromCategory}
+          handleSelectAllItems={AllItems}
         />
-        <NotAppBar />
         <Router>
           <Gallery path="/" items={items} />
           <Item path="/items/:id" />

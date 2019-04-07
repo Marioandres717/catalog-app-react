@@ -14,7 +14,6 @@ const styles = theme => ({
   base: {
     display: 'grid',
     gridTemplateColumns: 'minMax(220px, 434px) 448.8px',
-    gridTemplateRows: 'minMax(auto, 434px) auto',
     justifyContent: 'center',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.main,
