@@ -41,6 +41,7 @@ function ItemForm(props) {
   var { classes } = props;
   var { user } = useContext(UserContext);
   var [open, setOpen] = useState(false);
+  var [dialog, setDialog] = useState(null);
   var { item } = props.item
     ? props
     : { item: { id: '', name: '', description: '', picture: '' } };
@@ -63,8 +64,9 @@ function ItemForm(props) {
       .then(({ categories }) => setCategories(categories));
   }, []);
 
-  function handleClickOpen() {
+  function handleClickOpen(dialogContent) {
     setOpen(true);
+    setDialog(dialogContent);
   }
 
   function handleClose() {
@@ -130,7 +132,7 @@ function ItemForm(props) {
           color="primary"
           aria-label="Add"
           className={classes.fab}
-          onClick={handleClickOpen}
+          onClick={() => handleClickOpen('Edit')}
         >
           <AddIcon />
         </Fab>
@@ -140,7 +142,7 @@ function ItemForm(props) {
             variant="contained"
             color="primary"
             aria-label="Edit"
-            onClick={handleClickOpen}
+            onClick={() => handleClickOpen('Edit')}
             className={classes.btn}
             fullWidth
           >
@@ -150,7 +152,7 @@ function ItemForm(props) {
             variant="contained"
             color="secondary"
             aria-label="Edit"
-            onClick={handleDelete}
+            onClick={() => handleClickOpen('Delete')}
             className={classes.btn}
             fullWidth
           >
@@ -164,86 +166,121 @@ function ItemForm(props) {
         aria-labelledby="form-dialog-title"
         classes={{ root: classes.root }}
       >
-        <DialogTitle id="form-dialog-title">
-          {item.id ? 'Edit Item' : 'Add Item'}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To keep changes to this Item, please press the save button.
-          </DialogContentText>
+        {dialog === 'Edit' ? (
+          <Fragment>
+            <DialogTitle id="form-dialog-title">
+              {item.id ? 'Edit Item' : 'Add Item'}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                To keep changes to this Item, please press the save button.
+              </DialogContentText>
 
-          <TextField
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Name"
-            type="input"
-            fullWidth
-            value={name}
-            onChange={e => setName(e.target.value)}
-          />
+              <TextField
+                // eslint-disable-next-line jsx-a11y/no-autofocus
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Name"
+                type="input"
+                fullWidth
+                value={name}
+                onChange={e => setName(e.target.value)}
+              />
 
-          <TextField
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            margin="dense"
-            id="description"
-            label="Description"
-            type="text"
-            fullWidth
-            value={description}
-            onChange={e => setDescription(e.target.value)}
-          />
+              <TextField
+                // eslint-disable-next-line jsx-a11y/no-autofocus
+                margin="dense"
+                id="description"
+                label="Description"
+                type="text"
+                fullWidth
+                value={description}
+                onChange={e => setDescription(e.target.value)}
+              />
 
-          <TextField
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            margin="dense"
-            id="picture"
-            label="Picture"
-            type="text"
-            fullWidth
-            value={picture}
-            onChange={e => setPicture(e.target.value)}
-          />
+              <TextField
+                // eslint-disable-next-line jsx-a11y/no-autofocus
+                margin="dense"
+                id="picture"
+                label="Picture"
+                type="text"
+                fullWidth
+                value={picture}
+                onChange={e => setPicture(e.target.value)}
+              />
 
-          <TextField
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            margin="dense"
-            id="price"
-            label="Price"
-            type="text"
-            value={price}
-            fullWidth
-            onChange={e => setPrice(e.target.value)}
-          />
+              <TextField
+                // eslint-disable-next-line jsx-a11y/no-autofocus
+                margin="dense"
+                id="price"
+                label="Price"
+                type="text"
+                value={price}
+                fullWidth
+                onChange={e => setPrice(e.target.value)}
+              />
 
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="age-simple">Category</InputLabel>
-            <Select
-              value={category}
-              onChange={e => setCategory(e.target.value)}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {categories.length > 0
-                ? categories.map(category => (
-                    <MenuItem key={category.id} value={category.id}>
-                      {category.name}
-                    </MenuItem>
-                  ))
-                : null}
-            </Select>
-          </FormControl>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="secondary" variant="outlined">
-            Cancel
-          </Button>
-          <Button onClick={submitItem} color="primary" variant="outlined">
-            Keep Changes
-          </Button>
-        </DialogActions>
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="age-simple">Category</InputLabel>
+                <Select
+                  value={category}
+                  onChange={e => setCategory(e.target.value)}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {categories.length > 0
+                    ? categories.map(category => (
+                        <MenuItem key={category.id} value={category.id}>
+                          {category.name}
+                        </MenuItem>
+                      ))
+                    : null}
+                </Select>
+              </FormControl>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handleClose}
+                color="secondary"
+                variant="outlined"
+              >
+                Cancel
+              </Button>
+              <Button onClick={submitItem} color="primary" variant="outlined">
+                Keep Changes
+              </Button>
+            </DialogActions>
+          </Fragment>
+        ) : null}{' '}
+        {dialog === 'Delete' ? (
+          <Fragment>
+            <DialogTitle id="alert-dialog-slide-title">
+              Are you sure you want to delete {item.name} ?
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-slide-description">
+                If you accept to delete the item {item.name} there will no way
+                to recover the data.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  handleDelete();
+                  setOpen(false);
+                }}
+                color="primary"
+              >
+                Accept
+              </Button>
+            </DialogActions>
+          </Fragment>
+        ) : null}
       </Dialog>
     </div>
   );
