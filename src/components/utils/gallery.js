@@ -7,6 +7,7 @@ import {
   IconButton
 } from '@material-ui/core';
 import { navigate } from '@reach/router';
+import ItemForm from '../home/itemForm';
 
 var styles = theme => ({
   root: {
@@ -16,7 +17,8 @@ var styles = theme => ({
     overflow: 'hidden',
     backgroundColor: theme.palette.background.main,
     padding: '80px 100px',
-    maxWidth: '82vw'
+    maxWidth: '82vw',
+    position: 'relative'
   },
   gridList: {
     transform: 'translateZ(0)'
@@ -48,7 +50,6 @@ const Gallery = props => {
       }
     });
   }
-
   return (
     <div className={classes.root}>
       <GridList
@@ -83,6 +84,7 @@ const Gallery = props => {
           </GridListTile>
         ))}
       </GridList>
+      <ItemForm />
     </div>
   );
 };

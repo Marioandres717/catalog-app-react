@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,12 +9,31 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { withStyles } from '@material-ui/core/styles';
 import UserContext from '../../userContext';
 import { editItem, addItem, readCategories } from '../utils/urlBuilder';
-import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Fab
+} from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { navigate } from '@reach/router/lib/history';
 
 const styles = theme => ({
   formControl: {
     marginTop: theme.spacing.unit,
     minWidth: 150
+  },
+  btn: {
+    margin: '5px'
+  },
+  fab: {
+    margin: theme.spacing.unit,
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2
   }
 });
 
@@ -24,16 +43,18 @@ function ItemForm(props) {
   var [open, setOpen] = useState(false);
   var { item } = props.item
     ? props
-    : { item: { itemId: '', name: '', description: '', picture: '' } };
+    : { item: { id: '', name: '', description: '', picture: '' } };
 
   //form state
-  var [name, setName] = useState(item != null ? item.name : '');
+  var [name, setName] = useState(item.name ? item.name : '');
   var [description, setDescription] = useState(
-    item != null ? item.description : []
+    item.description ? item.description : ''
   );
-  var [picture, setPicture] = useState(item != null ? item.picture : '');
-  var [price, setPrice] = useState(item != null ? 126.99 : []);
-  var [category, setCategory] = useState(item != null ? item.categoryId : '');
+  var [picture, setPicture] = useState(item.picture ? item.picture : '');
+  var [price, setPrice] = useState(item.price ? item.price : 126.99);
+  var [category, setCategory] = useState(
+    item.categoryId ? item.categoryId : ''
+  );
   var [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -54,11 +75,9 @@ function ItemForm(props) {
     try {
       //   setSubmitted(true);
       let resp = await fetch(
-        item.itemId
-          ? editItem(item.categoryId, item.itemId)
-          : addItem(item.categoryId),
+        item.id ? editItem(item.categoryId, item.id) : addItem(category),
         {
-          method: item.itemId ? 'PUT' : 'POST',
+          method: item.id ? 'PUT' : 'POST',
           mode: 'cors',
           credentials: 'include',
           headers: {
@@ -70,7 +89,7 @@ function ItemForm(props) {
             name,
             description,
             picture,
-            category
+            categoryId: category
           })
         }
       );
@@ -83,23 +102,71 @@ function ItemForm(props) {
     }
   }
 
+  async function handleDelete() {
+    try {
+      await fetch(
+        `http://localhost:5000/categories/${item.categoryId}/items/${item.id}`,
+        {
+          method: 'DELETE',
+          mode: 'cors',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': user.csrfAccessToken
+          }
+        }
+      );
+      console.log('SUCCESSFULLY DELETED');
+      navigate('/');
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   return (
     <div>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleClickOpen}
-        fullWidth
-      >
-        Edit
-      </Button>
+      {!item.id ? (
+        <Fab
+          color="primary"
+          aria-label="Add"
+          className={classes.fab}
+          onClick={handleClickOpen}
+        >
+          <AddIcon />
+        </Fab>
+      ) : (
+        <Fragment>
+          <Button
+            variant="contained"
+            color="primary"
+            aria-label="Edit"
+            onClick={handleClickOpen}
+            className={classes.btn}
+            fullWidth
+          >
+            <EditIcon /> Edit Item
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            aria-label="Edit"
+            onClick={handleDelete}
+            className={classes.btn}
+            fullWidth
+          >
+            <DeleteIcon /> Delete Item
+          </Button>
+        </Fragment>
+      )}
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
         classes={{ root: classes.root }}
       >
-        <DialogTitle id="form-dialog-title">Edit Item</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          {item.id ? 'Edit Item' : 'Add Item'}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
             To keep changes to this Item, please press the save button.
@@ -113,7 +180,7 @@ function ItemForm(props) {
             label="Name"
             type="input"
             fullWidth
-            value={item.name ? item.name : name}
+            value={name}
             onChange={e => setName(e.target.value)}
           />
 
@@ -124,7 +191,7 @@ function ItemForm(props) {
             label="Description"
             type="text"
             fullWidth
-            value={item.description ? item.description : description}
+            value={description}
             onChange={e => setDescription(e.target.value)}
           />
 
@@ -135,7 +202,7 @@ function ItemForm(props) {
             label="Picture"
             type="text"
             fullWidth
-            value={item.picture ? item.picture : picture}
+            value={picture}
             onChange={e => setPicture(e.target.value)}
           />
 
@@ -145,7 +212,7 @@ function ItemForm(props) {
             id="price"
             label="Price"
             type="text"
-            value={item.price ? item.price : price}
+            value={price}
             fullWidth
             onChange={e => setPrice(e.target.value)}
           />

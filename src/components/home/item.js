@@ -8,7 +8,6 @@ import {
   Button
 } from '@material-ui/core';
 import UserContext from '../../userContext';
-import { navigate } from '@reach/router/lib/history';
 import ItemForm from './itemForm';
 
 const styles = theme => ({
@@ -53,27 +52,6 @@ const Item = props => {
   const { user } = useContext(UserContext);
   const { item } = location.state;
 
-  async function handleDelete() {
-    try {
-      await fetch(
-        `http://localhost:5000/categories/${item.categoryId}/items/${item.id}`,
-        {
-          method: 'DELETE',
-          mode: 'cors',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': user.csrfAccessToken
-          }
-        }
-      );
-      console.log('SUCCESSFULLY DELETED');
-      navigate('/');
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
   return (
     <div className={classes.base}>
       <div>
@@ -108,19 +86,8 @@ const Item = props => {
           </div>
         </div>
         <div className={classes.section3}>
-          {user.id == item.userId ? (
-            <Fragment>
-              <ItemForm item={item} />
-              <Button
-                variant="contained"
-                color="secondary"
-                fullWidth
-                onClick={handleDelete}
-                className={classes.btn}
-              >
-                Delete
-              </Button>
-            </Fragment>
+          {user.id === item.userId ? (
+            <ItemForm item={item} />
           ) : (
             <Fragment>
               <Button
