@@ -15,3 +15,7 @@ export function editItem(categoryId, itemId) {
 export function fbConnect() {
   return `${baseURL}/fbconnect`;
 }
+
+export function readCategories() {
+  return `${baseURL}/categories`;
+}

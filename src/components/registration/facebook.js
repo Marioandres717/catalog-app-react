@@ -4,9 +4,9 @@ import UserContext from '../../userContext';
 import retrieveCookies from '../utils/cookieRetriever';
 import { fbConnect } from '../utils/urlBuilder';
 
-const Facebook = props => {
-  var { setUser } = useContext(UserContext);
-  var { setModal, localstorage } = props;
+function Facebook(props) {
+  var { setUser, saveInfoInLocalstorage } = useContext(UserContext);
+  var { onClose } = props;
 
   async function handleLogin(response) {
     try {
@@ -22,7 +22,7 @@ const Facebook = props => {
         });
         let userID = await result.json();
         const cookies = retrieveCookies();
-        let u = {
+        let user = {
           id: userID,
           name: response.name,
           email: response.email,
@@ -31,9 +31,9 @@ const Facebook = props => {
           csrfAccessToken: cookies['csrf_access_token'],
           csrfRefreshToken: cookies['csrf_refresh_token']
         };
-        setUser(u);
-        setModal(false);
-        localstorage(u);
+        setUser(user);
+        saveInfoInLocalstorage(user);
+        onClose();
       }
     } catch (e) {
       console.error(e);
@@ -48,6 +48,6 @@ const Facebook = props => {
       callback={handleLogin}
     />
   );
-};
+}
 
 export default Facebook;

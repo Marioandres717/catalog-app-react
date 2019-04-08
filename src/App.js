@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import { Router } from '@reach/router';
 import Login from './components/registration/login';
-import CatalogList from './components/catalog/catalog-list';
-import NavBar from './components/navigation/navbar';
-import Main from './components/landing-page/main';
-import ItemList from './components/catalog/items/item-list';
 import UserContext from './userContext';
-import ItemDetails from './components/catalog/items/item-detail';
-import ItemCreate from './components/catalog/items/item-create';
+import Home from './components/navigation/home';
+import withRoot from './withRoot';
+import { withStyles } from '@material-ui/core/styles';
+import Gallery from './components/utils/gallery';
+import { home } from './components/utils/urlBuilder';
+import Item from './components/item/item';
+import NotSnackbar from './components/utils/NotSnackbar';
+import SnackbarContext from './snackbarContext';
+
+const styles = theme => ({
+  app: {
+    backgroundColor: theme.palette.background.main,
+    color: theme.palette.default.main,
+    margin: 0,
+    paddingTop: '0.1px',
+    minHeight: '100vh',
+    display: 'grid',
+    gridTemplateColumns: '256px 1fr'
+  }
+});
 
 function useUserLocalstorage() {
   const [user, setUser] = useState({
@@ -54,24 +66,99 @@ function useUserLocalstorage() {
   return { user, setUser, fetchUserFromLocalstorage, saveInfoInLocalstorage };
 }
 
-const App = () => {
-  const userHook = useUserLocalstorage();
+function useDataFetch() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetchHomeContent().then(data => setData(data));
+  }, []);
+
+  async function fetchHomeContent() {
+    try {
+      const response = await fetch(home());
+      const { categories } = await response.json();
+      return categories;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  return { data, setData, fetchHomeContent };
+}
+
+function useSnackbar() {
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'right',
+    message: ''
+  });
+
+  const handleOpen = newState => () => {
+    setSnackbar({ open: true, ...newState });
+  };
+
+  function handleClose() {
+    setSnackbar({ ...snackbar, open: false });
+  }
+
+  return { snackbar, setSnackbar, handleOpen, handleClose };
+}
+
+const App = props => {
+  var { classes } = props;
+  var userHook = useUserLocalstorage();
+  var dataHook = useDataFetch();
+  var snackbarHook = useSnackbar();
+  var [categories, setCategories] = useState([]);
+  var [items, setItems] = useState([]);
+  var { data } = dataHook;
+
+  useEffect(() => {
+    categoriesNameAndId();
+  }, [data]);
+
+  function categoriesNameAndId() {
+    var categories = data.map(category => {
+      let temp = {
+        name: category.name,
+        id: category.id
+      };
+      return temp;
+    });
+    setCategories(categories);
+  }
+
+  function AllItems() {
+    var items = data.flatMap(arr => arr.items);
+    setItems(items);
+  }
+
+  function itemsFromCategory(id) {
+    var items = data
+      .filter(category => category.id == id)
+      .flatMap(category => category.items);
+    setItems(items);
+  }
+
   return (
     <UserContext.Provider value={userHook}>
-      <CssBaseline />
-      <div className="App">
-        <NavBar />
-        <Router>
-          <Main path="/" />
-          <Login path="/login" />
-          <CatalogList path="/categories" />
-          <ItemList path="/categories/:categoryId/items" />
-          <ItemDetails path="/categories/:categoryId/items/:itemId" />
-          <ItemCreate path="/categories/:categoryId/additems" />
-        </Router>
-      </div>
+      <SnackbarContext.Provider value={snackbarHook}>
+        <div className={classes.app}>
+          <Home
+            categories={categories}
+            handleSelectItemsFromCategory={itemsFromCategory}
+            handleSelectAllItems={AllItems}
+          />
+          <Router>
+            <Gallery path="/" items={items} />
+            <Item path="/items/:id" />
+            <Login path="/login" />
+          </Router>
+          <NotSnackbar />
+        </div>
+      </SnackbarContext.Provider>
     </UserContext.Provider>
   );
 };
 
-export default App;
+export default withRoot(withStyles(styles)(App));

@@ -1,39 +1,86 @@
-import React, { useState, useContext } from 'react';
-import Facebook from './facebook';
-// import Google from './google';
+import React, { useState, useContext, Fragment } from 'react';
+import AuthModal from './authModal';
 import UserContext from '../../userContext';
-import Modal from '../../modal';
+import {
+  ListItemText,
+  withStyles,
+  ListItem,
+  ListItemAvatar,
+  Avatar
+} from '@material-ui/core';
+import SnackbarContext from '../../snackbarContext';
 
-var Login = () => {
-  var [showModal, setModal] = useState(false);
-  var { user, saveInfoInLocalstorage } = useContext(UserContext);
+var styles = theme => ({
+  listItem: {
+    borderRadius: '6px',
+    textAlign: 'center',
+    margin: '5px'
+  },
+  text: {
+    padding: '0 8px',
+    color: theme.palette.default.main,
+    margin: '5px'
+  },
+  loggedIn: {
+    padding: '0 8px',
+    color: theme.palette.default.main,
+    margin: '5px',
+    textAlign: 'auto'
+  }
+});
 
-  function toggleModal() {
-    setModal(!showModal);
+function Login(props) {
+  var { classes } = props;
+  var [open, setOpen] = useState(false);
+  var { user, setUser } = useContext(UserContext);
+  var { snackbar, setSnackbar } = useContext(SnackbarContext);
+  const firstname = user.name ? user.name.split(' ')[0] : '';
+
+  function handleLogin() {
+    setOpen(true);
+  }
+
+  function handleClose() {
+    setOpen(false);
+    setSnackbar({ ...snackbar, open: true, message: `Welcome!` });
+  }
+
+  function handleLogout() {
+    localStorage.clear();
+    setSnackbar({
+      ...snackbar,
+      open: true,
+      message: `${firstname}, Thanks For shopping with us!`
+    });
+    setUser(UserContext);
   }
 
   return (
-    <div>
-      {user.id != null ? (
-        <h1>Hello, {user.name}</h1>
-      ) : (
-        <button onClick={toggleModal}>Sign up | Login</button>
-      )}
-      {showModal ? (
-        <Modal>
-          <div>
-            <h1>Join the Catalog community</h1>
-            <Facebook
-              setModal={setModal}
-              localstorage={saveInfoInLocalstorage}
-            />
-            {/* <Google closeModal={closeModal} /> */}
-            <button onClick={() => setModal(false)}>Close</button>
-          </div>
-        </Modal>
-      ) : null}
-    </div>
-  );
-};
+    <Fragment>
+      <ListItem
+        button
+        key={user.id ? user.id : undefined}
+        classes={{ root: classes.listItem }}
+        onClick={user.id ? handleLogout : handleLogin}
+      >
+        {user.picture ? (
+          <ListItemAvatar>
+            <Avatar alt="me" src={user.picture ? user.picture : undefined} />
+          </ListItemAvatar>
+        ) : null}
 
-export default Login;
+        <ListItemText
+          primary={firstname ? 'Logout(' + firstname + ')' : 'Login'}
+          classes={
+            user.picture
+              ? { primary: classes.loggedIn }
+              : { primary: classes.text }
+          }
+        />
+      </ListItem>
+      <AuthModal open={open} onClose={handleClose} />
+    </Fragment>
+  );
+}
+
+export default withStyles(styles)(Login);
