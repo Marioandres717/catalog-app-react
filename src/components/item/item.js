@@ -9,7 +9,6 @@ import {
 } from '@material-ui/core';
 import UserContext from '../../userContext';
 import ItemForm from './itemForm';
-import NotSnackbar from '../utils/NotSnackbar';
 
 const styles = theme => ({
   base: {

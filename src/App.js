@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Router } from '@reach/router';
 import Login from './components/registration/login';
-import CatalogList from './components/catalog/catalog-list';
-import Main from './components/landing-page/main';
-import ItemList from './components/catalog/items/item-list';
 import UserContext from './userContext';
-import ItemDetails from './components/catalog/items/item-detail';
-import ItemCreate from './components/catalog/items/item-create';
-import Home from './components/home/home';
+import Home from './components/navigation/home';
 import withRoot from './withRoot';
 import { withStyles } from '@material-ui/core/styles';
 import Gallery from './components/utils/gallery';
 import { home } from './components/utils/urlBuilder';
-import Item from './components/home/item';
+import Item from './components/item/item';
 import NotSnackbar from './components/utils/NotSnackbar';
 import SnackbarContext from './snackbarContext';
 
@@ -157,12 +152,7 @@ const App = props => {
           <Router>
             <Gallery path="/" items={items} />
             <Item path="/items/:id" />
-            <Main path="/main" />
             <Login path="/login" />
-            <CatalogList path="/categories" />
-            <ItemList path="/categories/:categoryId/items" />
-            <ItemDetails path="/categories/:categoryId/items/:itemId" />
-            <ItemCreate path="/categories/:categoryId/additems" />
           </Router>
           <NotSnackbar />
         </div>

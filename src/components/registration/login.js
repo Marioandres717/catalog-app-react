@@ -1,5 +1,5 @@
 import React, { useState, useContext, Fragment } from 'react';
-import Modal from '../../modal';
+import AuthModal from './authModal';
 import UserContext from '../../userContext';
 import {
   ListItemText,
@@ -78,7 +78,7 @@ function Login(props) {
           }
         />
       </ListItem>
-      <Modal open={open} onClose={handleClose} />
+      <AuthModal open={open} onClose={handleClose} />
     </Fragment>
   );
 }

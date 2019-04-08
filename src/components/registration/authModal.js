@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/styles';
 import List from '@material-ui/core/List';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import Facebook from './components/registration/facebook';
+import Facebook from './facebook';
 
 const useStyles = makeStyles({
   container: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   }
 });
 
-function Modal(props) {
+function AuthModal(props) {
   const classes = useStyles();
   const { onClose, ...other } = props;
 
@@ -43,9 +43,9 @@ function Modal(props) {
   );
 }
 
-Modal.propTypes = {
+AuthModal.propTypes = {
   onClose: PropTypes.func,
   selectedValue: PropTypes.string
 };
 
-export default Modal;
+export default AuthModal;
