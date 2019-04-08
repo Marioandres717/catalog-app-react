@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import {
   Button,
   Dialog,
@@ -9,6 +9,7 @@ import {
   withStyles
 } from '@material-ui/core';
 import { navigate } from '@reach/router/lib/history';
+import SnackbarContext from '../../snackbarContext';
 
 // eslint-disable-next-line no-unused-vars
 const styles = theme => ({
@@ -20,6 +21,7 @@ const styles = theme => ({
 
 function DeleteItemModal(props) {
   var { classes, item, handleClose, user, open } = props;
+  var { snackbar, setSnackbar } = useContext(SnackbarContext);
 
   async function handleDelete() {
     try {
@@ -37,6 +39,11 @@ function DeleteItemModal(props) {
       );
       console.log('SUCCESSFULLY DELETED');
       handleClose();
+      setSnackbar({
+        ...snackbar,
+        open: true,
+        message: `${item.name} Succesfully Deleted`
+      });
       navigate('/');
     } catch (e) {
       console.error(e);

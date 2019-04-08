@@ -13,7 +13,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Gallery from './components/utils/gallery';
 import { home } from './components/utils/urlBuilder';
 import Item from './components/home/item';
-import NotAppBar from './components/utils/notAppBar';
+import NotSnackbar from './components/utils/NotSnackbar';
+import SnackbarContext from './snackbarContext';
 
 const styles = theme => ({
   app: {
@@ -89,10 +90,30 @@ function useDataFetch() {
   return { data, setData, fetchHomeContent };
 }
 
+function useSnackbar() {
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'right',
+    message: ''
+  });
+
+  const handleOpen = newState => () => {
+    setSnackbar({ open: true, ...newState });
+  };
+
+  function handleClose() {
+    setSnackbar({ ...snackbar, open: false });
+  }
+
+  return { snackbar, setSnackbar, handleOpen, handleClose };
+}
+
 const App = props => {
   var { classes } = props;
   var userHook = useUserLocalstorage();
   var dataHook = useDataFetch();
+  var snackbarHook = useSnackbar();
   var [categories, setCategories] = useState([]);
   var [items, setItems] = useState([]);
   var { data } = dataHook;
@@ -126,23 +147,26 @@ const App = props => {
 
   return (
     <UserContext.Provider value={userHook}>
-      <div className={classes.app}>
-        <Home
-          categories={categories}
-          handleSelectItemsFromCategory={itemsFromCategory}
-          handleSelectAllItems={AllItems}
-        />
-        <Router>
-          <Gallery path="/" items={items} />
-          <Item path="/items/:id" />
-          <Main path="/main" />
-          <Login path="/login" />
-          <CatalogList path="/categories" />
-          <ItemList path="/categories/:categoryId/items" />
-          <ItemDetails path="/categories/:categoryId/items/:itemId" />
-          <ItemCreate path="/categories/:categoryId/additems" />
-        </Router>
-      </div>
+      <SnackbarContext.Provider value={snackbarHook}>
+        <div className={classes.app}>
+          <Home
+            categories={categories}
+            handleSelectItemsFromCategory={itemsFromCategory}
+            handleSelectAllItems={AllItems}
+          />
+          <Router>
+            <Gallery path="/" items={items} />
+            <Item path="/items/:id" />
+            <Main path="/main" />
+            <Login path="/login" />
+            <CatalogList path="/categories" />
+            <ItemList path="/categories/:categoryId/items" />
+            <ItemDetails path="/categories/:categoryId/items/:itemId" />
+            <ItemCreate path="/categories/:categoryId/additems" />
+          </Router>
+          <NotSnackbar />
+        </div>
+      </SnackbarContext.Provider>
     </UserContext.Provider>
   );
 };

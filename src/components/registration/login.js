@@ -8,6 +8,7 @@ import {
   ListItemAvatar,
   Avatar
 } from '@material-ui/core';
+import SnackbarContext from '../../snackbarContext';
 
 var styles = theme => ({
   listItem: {
@@ -32,6 +33,7 @@ function Login(props) {
   var { classes } = props;
   var [open, setOpen] = useState(false);
   var { user, setUser } = useContext(UserContext);
+  var { snackbar, setSnackbar } = useContext(SnackbarContext);
   const firstname = user.name ? user.name.split(' ')[0] : '';
 
   function handleLogin() {
@@ -40,10 +42,16 @@ function Login(props) {
 
   function handleClose() {
     setOpen(false);
+    setSnackbar({ ...snackbar, open: true, message: `Welcome!` });
   }
 
   function handleLogout() {
     localStorage.clear();
+    setSnackbar({
+      ...snackbar,
+      open: true,
+      message: `${firstname}, Thanks For shopping with us!`
+    });
     setUser(UserContext);
   }
 

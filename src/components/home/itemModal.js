@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { useState, Fragment, useEffect, useContext } from 'react';
 import {
   Button,
   Dialog,
@@ -14,6 +14,7 @@ import {
   withStyles
 } from '@material-ui/core';
 import { readCategories, editItem, addItem } from '../utils/urlBuilder';
+import SnackbarContext from '../../snackbarContext';
 
 const styles = theme => ({
   root: {
@@ -38,6 +39,7 @@ function ItemModal(props) {
   var [category, setCategory] = useState(
     item.categoryId ? item.categoryId : ''
   );
+  var { snackbar, setSnackbar } = useContext(SnackbarContext);
 
   useEffect(() => {
     fetch(readCategories())
@@ -70,6 +72,13 @@ function ItemModal(props) {
       // eslint-disable-next-line no-unused-vars
       let data = await resp.json();
       handleClose();
+      setSnackbar({
+        ...snackbar,
+        open: true,
+        message: item.id
+          ? `${name} Succesfully Edited`
+          : `${name} Succesfully Added`
+      });
       //   navigate(`/categories/${categoryId}/items`);
     } catch (e) {
       console.error(e);
