@@ -7,7 +7,7 @@ import {
   IconButton
 } from '@material-ui/core';
 import { navigate } from '@reach/router';
-import ItemForm from '../home/itemForm';
+import ItemForm from '../item/itemForm';
 import UserContext from '../../userContext';
 
 var styles = theme => ({
