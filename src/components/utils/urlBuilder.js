@@ -1,4 +1,7 @@
-const baseURL = 'http://localhost:5000';
+/* eslint-disable no-undef */
+const baseURL = process.env.API_URL
+  ? process.env.API_URL
+  : 'http://localhost:5000';
 
 export function home() {
   return `${baseURL}/`;
