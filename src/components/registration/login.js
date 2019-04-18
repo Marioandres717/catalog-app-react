@@ -32,7 +32,15 @@ var styles = theme => ({
 function Login(props) {
   var { classes } = props;
   var [open, setOpen] = useState(false);
-  var { user, setUser } = useContext(UserContext);
+  var { user, setUser } = useContext({
+    id: null,
+    name: '',
+    email: '',
+    picture: '',
+    fbAccessToken: '',
+    csrfAccessToken: '',
+    csrfRefreshToken: ''
+  });
   var { snackbar, setSnackbar } = useContext(SnackbarContext);
   const firstname = user.name ? user.name.split(' ')[0] : '';
 
