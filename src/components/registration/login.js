@@ -34,7 +34,6 @@ function Login(props) {
   var [open, setOpen] = useState(false);
   var { user, setUser } = useContext(UserContext);
   var { snackbar, setSnackbar } = useContext(SnackbarContext);
-  const firstname = user.name ? user.name.split(' ')[0] : '';
 
   function handleLogin() {
     setOpen(true);
@@ -50,7 +49,7 @@ function Login(props) {
     setSnackbar({
       ...snackbar,
       open: true,
-      message: `${firstname}, Thanks For shopping with us!`
+      message: `${user.name.split(' ')[0]}, Thanks For shopping with us!`
     });
     setUser(UserContext);
   }
@@ -70,7 +69,9 @@ function Login(props) {
         ) : null}
 
         <ListItemText
-          primary={firstname ? 'Logout(' + firstname + ')' : 'Login'}
+          primary={
+            user.name ? 'Logout(' + user.name.split(' ')[0] + ')' : 'Login'
+          }
           classes={
             user.picture
               ? { primary: classes.loggedIn }
