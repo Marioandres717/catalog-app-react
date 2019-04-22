@@ -15,6 +15,9 @@ export function editItem(categoryId, itemId) {
   return `${baseURL}/categories/${categoryId}/items/${itemId}`;
 }
 
+export function deleteItem(categoryId, itemId) {
+  return `${baseURL}/categories/${categoryId}/items/${itemIid}`;
+}
 export function fbConnect() {
   return `${baseURL}/fbconnect`;
 }

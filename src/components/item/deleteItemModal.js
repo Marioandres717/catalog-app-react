@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { navigate } from '@reach/router/lib/history';
 import SnackbarContext from '../../snackbarContext';
+import { deleteItem } from '../utils/urlBuilder';
 
 // eslint-disable-next-line no-unused-vars
 const styles = theme => ({
@@ -25,18 +26,15 @@ function DeleteItemModal(props) {
 
   async function handleDelete() {
     try {
-      await fetch(
-        `http://localhost:5000/categories/${item.categoryId}/items/${item.id}`,
-        {
-          method: 'DELETE',
-          mode: 'cors',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': user.csrfAccessToken
-          }
+      await fetch(deleteItem(item.categoryId, item.id), {
+        method: 'DELETE',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': user.csrfAccessToken
         }
-      );
+      });
       console.log('SUCCESSFULLY DELETED');
       handleClose();
       setSnackbar({

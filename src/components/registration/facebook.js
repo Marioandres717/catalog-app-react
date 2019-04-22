@@ -22,7 +22,7 @@ function Facebook(props) {
         });
         let userID = await result.json();
         const cookies = retrieveCookies();
-        console.log(cookies)
+
         let user = {
           id: userID,
           name: response.name,
