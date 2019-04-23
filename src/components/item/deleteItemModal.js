@@ -8,7 +8,7 @@ import {
   DialogActions,
   withStyles
 } from '@material-ui/core';
-import { navigate } from '@reach/router/lib/history';
+import { navigate } from '@reach/router';
 import SnackbarContext from '../../snackbarContext';
 import { deleteItem } from '../utils/urlBuilder';
 
@@ -21,12 +21,12 @@ const styles = theme => ({
 });
 
 function DeleteItemModal(props) {
-  var { classes, item, handleClose, user, open } = props;
+  var { classes, item, setItems, handleClose, user, open } = props;
   var { snackbar, setSnackbar } = useContext(SnackbarContext);
 
   async function handleDelete() {
     try {
-      await fetch(deleteItem(item.categoryId, item.id), {
+      let response = await fetch(deleteItem(item.categoryId, item.id), {
         method: 'DELETE',
         mode: 'cors',
         credentials: 'include',
@@ -35,16 +35,21 @@ function DeleteItemModal(props) {
           'X-CSRF-TOKEN': user.csrfAccessToken
         }
       });
-      console.log('SUCCESSFULLY DELETED');
+      let { data } = await response.json();
       handleClose();
       setSnackbar({
         ...snackbar,
         open: true,
         message: `${item.name} Succesfully Deleted`
       });
-      navigate('/');
+      setItems(data);
+      navigate(`/`);
     } catch (e) {
-      console.error(e);
+      setSnackbar({
+        ...snackbar,
+        open: true,
+        message: `Failed to deleted item`
+      });
     }
   }
   return (

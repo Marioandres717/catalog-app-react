@@ -22,7 +22,7 @@ const styles = theme => ({
 });
 
 function ItemForm(props) {
-  var { classes } = props;
+  var { classes, setItems } = props;
   var { user } = useContext(UserContext);
   var [open, setOpen] = useState(false);
   var [dialog, setDialog] = useState('');
@@ -81,6 +81,7 @@ function ItemForm(props) {
           item={item}
           handleClose={handleClose}
           user={user}
+          setItems={setItems}
         />
       ) : null}
       {dialog === 'Delete' ? (
@@ -89,6 +90,7 @@ function ItemForm(props) {
           item={item}
           handleClose={handleClose}
           user={user}
+          setItems={setItems}
         />
       ) : null}
     </div>

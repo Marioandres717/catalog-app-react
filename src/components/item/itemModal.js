@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core';
 import { readCategories, editItem, addItem } from '../utils/urlBuilder';
 import SnackbarContext from '../../snackbarContext';
+import { navigate } from '@reach/router';
 
 const styles = theme => ({
   root: {
@@ -28,7 +29,7 @@ const styles = theme => ({
 });
 
 function ItemModal(props) {
-  var { classes, item, handleClose, user, open } = props;
+  var { classes, item, setItems, handleClose, user, open } = props;
   var [name, setName] = useState(item.name ? item.name : '');
   var [picture, setPicture] = useState(item.picture ? item.picture : '');
   var [price, setPrice] = useState(item.price ? item.price : 126.99);
@@ -70,7 +71,7 @@ function ItemModal(props) {
         }
       );
       // eslint-disable-next-line no-unused-vars
-      let data = await resp.json();
+      let { data } = await resp.json();
       handleClose();
       setSnackbar({
         ...snackbar,
@@ -79,10 +80,16 @@ function ItemModal(props) {
           ? `${name} Succesfully Edited`
           : `${name} Succesfully Added`
       });
-      //   navigate(`/categories/${categoryId}/items`);
+      setItems(data);
+      navigate(`/`);
     } catch (e) {
       console.error(e);
-      //   setSubmitted(true);
+      setSnackbar({
+        ...snackbar,
+        open: true,
+        message: `Error!, could not completed operation, try again.`
+      });
+      navigate(`/`);
     }
   }
 

@@ -111,7 +111,7 @@ const App = props => {
   var snackbarHook = useSnackbar();
   var [categories, setCategories] = useState([]);
   var [items, setItems] = useState([]);
-  var { data } = dataHook;
+  var { data, setData } = dataHook;
 
   useEffect(() => {
     categoriesNameAndId();
@@ -150,8 +150,8 @@ const App = props => {
             handleSelectAllItems={AllItems}
           />
           <Router>
-            <Gallery path="/" items={items} />
-            <Item path="/items/:id" />
+            <Gallery path="/" items={items} setItems={setData} />
+            <Item path="/items/:id" setItems={setData} />
             <Login path="/login" />
           </Router>
           <NotSnackbar />

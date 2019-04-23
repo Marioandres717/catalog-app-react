@@ -47,7 +47,7 @@ const styles = theme => ({
 });
 
 const Item = props => {
-  const { classes, location } = props;
+  const { classes, location, setItems } = props;
   const { user } = useContext(UserContext);
   const { item } = location.state;
 
@@ -86,7 +86,7 @@ const Item = props => {
         </div>
         <div className={classes.section3}>
           {user.id === item.userId ? (
-            <ItemForm item={item} />
+            <ItemForm item={item} setItems={setItems} />
           ) : (
             <Fragment>
               <Button

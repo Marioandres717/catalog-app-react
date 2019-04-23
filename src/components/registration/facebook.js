@@ -3,9 +3,11 @@ import FacebookLogin from 'react-facebook-login';
 import UserContext from '../../userContext';
 import retrieveCookies from '../utils/cookieRetriever';
 import { fbConnect } from '../utils/urlBuilder';
+import SnackbarContext from '../../snackbarContext';
 
 function Facebook(props) {
   var { setUser, saveInfoInLocalstorage } = useContext(UserContext);
+  var { snackbar, setSnackbar } = useContext(SnackbarContext);
   var { onClose } = props;
 
   async function handleLogin(response) {
@@ -38,6 +40,7 @@ function Facebook(props) {
       }
     } catch (e) {
       console.error(e);
+      setSnackbar({ ...snackbar, open: true, message: `Error while login in` });
     }
   }
 

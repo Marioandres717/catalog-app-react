@@ -33,7 +33,7 @@ var styles = theme => ({
 });
 
 const Gallery = props => {
-  var { classes, items } = props;
+  var { classes, items, setItems } = props;
   var [isHover, setIsHover] = useState(null);
   var { user } = useContext(UserContext);
 
@@ -86,7 +86,7 @@ const Gallery = props => {
           </GridListTile>
         ))}
       </GridList>
-      {user.id ? <ItemForm /> : null}
+      {user.id ? <ItemForm setItems={setItems} /> : null}
     </div>
   );
 };
