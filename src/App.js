@@ -88,9 +88,10 @@ function useDataFetch() {
 function useSnackbar() {
   const [snackbar, setSnackbar] = useState({
     open: false,
-    vertical: 'top',
-    horizontal: 'right',
-    message: ''
+    vertical: 'bottom',
+    horizontal: 'left',
+    message: '',
+    variant: 'success'
   });
 
   const handleOpen = newState => () => {

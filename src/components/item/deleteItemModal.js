@@ -40,6 +40,7 @@ function DeleteItemModal(props) {
       setSnackbar({
         ...snackbar,
         open: true,
+        variant: 'success',
         message: `${item.name} Succesfully Deleted`
       });
       setItems(data);
@@ -48,6 +49,7 @@ function DeleteItemModal(props) {
       setSnackbar({
         ...snackbar,
         open: true,
+        variant: 'error',
         message: `Failed to deleted item`
       });
     }

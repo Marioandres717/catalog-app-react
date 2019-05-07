@@ -76,6 +76,7 @@ function ItemModal(props) {
       setSnackbar({
         ...snackbar,
         open: true,
+        variant: 'success',
         message: item.id
           ? `${name} Succesfully Edited`
           : `${name} Succesfully Added`
@@ -87,6 +88,7 @@ function ItemModal(props) {
       setSnackbar({
         ...snackbar,
         open: true,
+        variant: 'error',
         message: `Error!, could not completed operation, try again.`
       });
       navigate(`/`);

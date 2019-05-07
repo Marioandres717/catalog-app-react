@@ -42,7 +42,6 @@ function Login(props) {
 
   function handleClose() {
     setOpen(false);
-    setSnackbar({ ...snackbar, open: true, message: `Welcome!` });
   }
 
   function handleLogout() {
@@ -50,6 +49,7 @@ function Login(props) {
     setSnackbar({
       ...snackbar,
       open: true,
+      variant: 'success',
       message: `${firstname}, Thanks For shopping with us!`
     });
     setUser(UserContext);

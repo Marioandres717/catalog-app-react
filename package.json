@@ -43,7 +43,7 @@
   },
   "scripts": {
     "clear-build-cache": "rm -rf dist/ .cache/",
-    "dev": "parcel public/index.html",
+    "dev": "parcel public/index.html --https",
     "prod": "parcel build public/index.html",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "format:check": "prettier --list-different \"src/**/*.{js,jsx}\"",

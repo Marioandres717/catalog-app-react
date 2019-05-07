@@ -37,10 +37,21 @@ function Facebook(props) {
         setUser(user);
         saveInfoInLocalstorage(user);
         onClose();
+        setSnackbar({
+          ...snackbar,
+          open: true,
+          variant: 'success',
+          message: `Welcome! ${response.name}`
+        });
       }
     } catch (e) {
       console.error(e);
-      setSnackbar({ ...snackbar, open: true, message: `Error while login in` });
+      setSnackbar({
+        ...snackbar,
+        open: true,
+        variant: 'error',
+        message: `Error while login in`
+      });
     }
   }
 
