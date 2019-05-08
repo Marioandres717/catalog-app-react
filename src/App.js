@@ -53,11 +53,17 @@ const App = props => {
   }
 
   function AllItems() {
+    if (isEmpty(data)) {
+      return [];
+    }
     var items = data.flatMap(arr => arr.items);
     setItems(items);
   }
 
   function itemsFromCategory(id) {
+    if (isEmpty(data)) {
+      return [];
+    }
     var items = data
       .filter(category => category.id == id)
       .flatMap(category => category.items);
