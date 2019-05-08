@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Router } from '@reach/router';
-import Login from './components/registration/login';
-import UserContext from './userContext';
+import UserContext from './context/userContext';
 import Home from './components/navigation/home';
 import withRoot from './withRoot';
 import { withStyles } from '@material-ui/core/styles';
 import Gallery from './components/utils/gallery';
-import { home } from './components/utils/urlBuilder';
 import Item from './components/item/item';
 import NotSnackbar from './components/utils/NotSnackbar';
-import SnackbarContext from './snackbarContext';
+import SnackbarContext from './context/snackbarContext';
+import useUser from './hooks/useUser';
+import useSnackbar from './hooks/useSnackbar';
+import useProduct from './hooks/useProduct';
 
 const styles = theme => ({
   app: {
@@ -23,92 +24,10 @@ const styles = theme => ({
   }
 });
 
-function useUserLocalstorage() {
-  const [user, setUser] = useState({
-    id: null,
-    name: '',
-    email: '',
-    picture: '',
-    fbAccessToken: '',
-    csrfAccessToken: '',
-    csrfRefreshToken: ''
-  });
-
-  useEffect(() => {
-    fetchUserFromLocalstorage();
-  }, []);
-
-  function fetchUserFromLocalstorage() {
-    if (localStorage.length) {
-      let data = {
-        id: +localStorage.id,
-        accessToken: localStorage.accessToken,
-        name: localStorage.name,
-        email: localStorage.email,
-        picture: localStorage.picture,
-        csrfAccessToken: localStorage.csrfAccessToken,
-        csrfRefreshToken: localStorage.csrfRefreshToken
-      };
-      setUser(data);
-    }
-  }
-
-  function saveInfoInLocalstorage(user) {
-    localStorage.setItem('accessToken', user.fbAccessToken);
-    localStorage.setItem('id', user.id);
-    localStorage.setItem('email', user.email);
-    localStorage.setItem('name', user.name);
-    localStorage.setItem('picture', user.picture);
-    localStorage.setItem('csrfAccessToken', user.csrfAccessToken);
-    localStorage.setItem('csrfRefreshToken', user.csrfRefreshToken);
-  }
-
-  return { user, setUser, fetchUserFromLocalstorage, saveInfoInLocalstorage };
-}
-
-function useDataFetch() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetchHomeContent().then(data => setData(data));
-  }, []);
-
-  async function fetchHomeContent() {
-    try {
-      const response = await fetch(home());
-      const { categories } = await response.json();
-      return categories;
-    } catch (err) {
-      console.error(err);
-    }
-  }
-  return { data, setData, fetchHomeContent };
-}
-
-function useSnackbar() {
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    vertical: 'bottom',
-    horizontal: 'left',
-    message: '',
-    variant: 'success'
-  });
-
-  const handleOpen = newState => () => {
-    setSnackbar({ open: true, ...newState });
-  };
-
-  function handleClose() {
-    setSnackbar({ ...snackbar, open: false });
-  }
-
-  return { snackbar, setSnackbar, handleOpen, handleClose };
-}
-
 const App = props => {
   var { classes } = props;
-  var userHook = useUserLocalstorage();
-  var dataHook = useDataFetch();
+  var userHook = useUser();
+  var dataHook = useProduct();
   var snackbarHook = useSnackbar();
   var [categories, setCategories] = useState([]);
   var [items, setItems] = useState([]);
@@ -153,7 +72,6 @@ const App = props => {
           <Router>
             <Gallery path="/" items={items} setItems={setData} />
             <Item path="/items/:id" setItems={setData} />
-            <Login path="/login" />
           </Router>
           <NotSnackbar />
         </div>

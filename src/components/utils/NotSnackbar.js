@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContext from '../../snackbarContext';
+import SnackbarContext from '../../context/snackbarContext';
 import classNames from 'classnames';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';

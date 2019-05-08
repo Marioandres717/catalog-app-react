@@ -14,7 +14,7 @@ import {
   withStyles
 } from '@material-ui/core';
 import { readCategories, editItem, addItem } from '../utils/urlBuilder';
-import SnackbarContext from '../../snackbarContext';
+import SnackbarContext from '../../context/snackbarContext';
 import { navigate } from '@reach/router';
 
 const styles = theme => ({

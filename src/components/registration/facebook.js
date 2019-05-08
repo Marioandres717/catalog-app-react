@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import FacebookLogin from 'react-facebook-login';
-import UserContext from '../../userContext';
+import UserContext from '../../context/userContext';
 import retrieveCookies from '../utils/cookieRetriever';
 import { fbConnect } from '../utils/urlBuilder';
-import SnackbarContext from '../../snackbarContext';
+import SnackbarContext from '../../context/snackbarContext';
 
 function Facebook(props) {
   var { setUser, saveInfoInLocalstorage } = useContext(UserContext);

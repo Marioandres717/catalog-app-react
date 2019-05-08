@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { navigate } from '@reach/router';
 import ItemForm from '../item/itemForm';
-import UserContext from '../../userContext';
+import UserContext from '../../context/userContext';
 
 var styles = theme => ({
   root: {

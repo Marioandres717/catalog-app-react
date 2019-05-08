@@ -44,7 +44,7 @@
   "scripts": {
     "clear-build-cache": "rm -rf dist/ .cache/",
     "dev": "parcel public/index.html --https",
-    "prod": "parcel public/index.html",
+    "prod": "parcel build public/index.html",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "format:check": "prettier --list-different \"src/**/*.{js,jsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet --fix",

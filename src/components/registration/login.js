@@ -1,6 +1,6 @@
 import React, { useState, useContext, Fragment } from 'react';
 import AuthModal from './authModal';
-import UserContext from '../../userContext';
+import UserContext from '../../context/userContext';
 import {
   ListItemText,
   withStyles,
@@ -8,7 +8,8 @@ import {
   ListItemAvatar,
   Avatar
 } from '@material-ui/core';
-import SnackbarContext from '../../snackbarContext';
+import SnackbarContext from '../../context/snackbarContext';
+import isEmpty from '../utils/isEmptyObject';
 
 var styles = theme => ({
   listItem: {
@@ -34,7 +35,6 @@ function Login(props) {
   var [open, setOpen] = useState(false);
   var { user, setUser } = useContext(UserContext);
   var { snackbar, setSnackbar } = useContext(SnackbarContext);
-  const firstname = user.name ? user.name.split(' ')[0] : '';
 
   function handleLogin() {
     setOpen(true);
@@ -44,13 +44,22 @@ function Login(props) {
     setOpen(false);
   }
 
+  function getFirstName(user) {
+    if (isEmpty(user)) {
+      return '';
+    }
+    var firstname = user.name ? user.name.split(' ')[0] : '';
+
+    return firstname;
+  }
+
   function handleLogout() {
     localStorage.clear();
     setSnackbar({
       ...snackbar,
       open: true,
       variant: 'success',
-      message: `${firstname}, Thanks For shopping with us!`
+      message: `${getFirstName(user)}, Thanks For shopping with us!`
     });
     setUser(UserContext);
   }
@@ -70,7 +79,7 @@ function Login(props) {
         ) : null}
 
         <ListItemText
-          primary={firstname ? 'Logout(' + firstname + ')' : 'Login'}
+          primary={getFirstName(user) ? 'Logout' : 'Login'}
           classes={
             user.picture
               ? { primary: classes.loggedIn }

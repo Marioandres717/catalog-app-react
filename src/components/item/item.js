@@ -7,7 +7,7 @@ import {
   Chip,
   Button
 } from '@material-ui/core';
-import UserContext from '../../userContext';
+import UserContext from '../../context/userContext';
 import ItemForm from './itemForm';
 
 const styles = theme => ({

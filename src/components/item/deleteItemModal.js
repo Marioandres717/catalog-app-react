@@ -9,7 +9,7 @@ import {
   withStyles
 } from '@material-ui/core';
 import { navigate } from '@reach/router';
-import SnackbarContext from '../../snackbarContext';
+import SnackbarContext from '../../context/snackbarContext';
 import { deleteItem } from '../utils/urlBuilder';
 
 // eslint-disable-next-line no-unused-vars
