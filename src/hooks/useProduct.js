@@ -5,10 +5,10 @@ function useProduct() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetchHomeContent().then(data => setData(data));
+    fetchAllContent().then(data => setData(data));
   }, []);
 
-  async function fetchHomeContent() {
+  async function fetchAllContent() {
     try {
       const response = await fetch(home());
       const { categories } = await response.json();
@@ -17,7 +17,7 @@ function useProduct() {
       console.error(err);
     }
   }
-  return { data, setData, fetchHomeContent };
+  return { data, setData, fetchAllContent };
 }
 
 export default useProduct;

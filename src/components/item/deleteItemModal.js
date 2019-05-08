@@ -11,6 +11,7 @@ import {
 import { navigate } from '@reach/router';
 import SnackbarContext from '../../context/snackbarContext';
 import { deleteItem } from '../utils/urlBuilder';
+import useProduct from '../../hooks/useProduct';
 
 // eslint-disable-next-line no-unused-vars
 const styles = theme => ({
@@ -23,10 +24,11 @@ const styles = theme => ({
 function DeleteItemModal(props) {
   var { classes, item, setItems, handleClose, user, open } = props;
   var { snackbar, setSnackbar } = useContext(SnackbarContext);
+  var { fetchAllContent } = useProduct();
 
   async function handleDelete() {
     try {
-      let response = await fetch(deleteItem(item.categoryId, item.id), {
+      await fetch(deleteItem(item.categoryId, item.id), {
         method: 'DELETE',
         mode: 'cors',
         credentials: 'include',
@@ -35,7 +37,6 @@ function DeleteItemModal(props) {
           'X-CSRF-TOKEN': user.csrfAccessToken
         }
       });
-      let { data } = await response.json();
       handleClose();
       setSnackbar({
         ...snackbar,
@@ -43,6 +44,7 @@ function DeleteItemModal(props) {
         variant: 'success',
         message: `${item.name} Succesfully Deleted`
       });
+      let data = await fetchAllContent();
       setItems(data);
       navigate(`/`);
     } catch (e) {

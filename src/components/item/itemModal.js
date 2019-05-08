@@ -16,6 +16,7 @@ import {
 import { readCategories, editItem, addItem } from '../utils/urlBuilder';
 import SnackbarContext from '../../context/snackbarContext';
 import { navigate } from '@reach/router';
+import useProduct from '../../hooks/useProduct';
 
 const styles = theme => ({
   root: {
@@ -41,6 +42,7 @@ function ItemModal(props) {
     item.categoryId ? item.categoryId : ''
   );
   var { snackbar, setSnackbar } = useContext(SnackbarContext);
+  var { fetchAllContent } = useProduct();
 
   useEffect(() => {
     fetch(readCategories())
@@ -50,8 +52,7 @@ function ItemModal(props) {
 
   async function submitItem() {
     try {
-      //   setSubmitted(true);
-      let resp = await fetch(
+      await fetch(
         item.id ? editItem(item.categoryId, item.id) : addItem(category),
         {
           method: item.id ? 'PUT' : 'POST',
@@ -70,8 +71,6 @@ function ItemModal(props) {
           })
         }
       );
-      // eslint-disable-next-line no-unused-vars
-      let { data } = await resp.json();
       handleClose();
       setSnackbar({
         ...snackbar,
@@ -81,6 +80,7 @@ function ItemModal(props) {
           ? `${name} Succesfully Edited`
           : `${name} Succesfully Added`
       });
+      let data = await fetchAllContent();
       setItems(data);
       navigate(`/`);
     } catch (e) {
