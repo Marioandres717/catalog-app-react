@@ -58,7 +58,7 @@ function Login(props) {
     setSnackbar({
       ...snackbar,
       open: true,
-      variant: 'success',
+      variant: 'info',
       message: `${getFirstName(user)}, Thanks For shopping with us!`
     });
     setUser(UserContext);

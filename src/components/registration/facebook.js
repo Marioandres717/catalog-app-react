@@ -40,7 +40,7 @@ function Facebook(props) {
         setSnackbar({
           ...snackbar,
           open: true,
-          variant: 'success',
+          variant: 'info',
           message: `Welcome! ${response.name}`
         });
       }

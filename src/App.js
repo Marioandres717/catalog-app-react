@@ -11,6 +11,7 @@ import SnackbarContext from './context/snackbarContext';
 import useUser from './hooks/useUser';
 import useSnackbar from './hooks/useSnackbar';
 import useProduct from './hooks/useProduct';
+import isEmpty from './components/utils/isEmptyObject';
 
 const styles = theme => ({
   app: {
@@ -38,6 +39,9 @@ const App = props => {
   }, [data]);
 
   function categoriesNameAndId() {
+    if (isEmpty(data)) {
+      return [];
+    }
     var categories = data.map(category => {
       let temp = {
         name: category.name,
