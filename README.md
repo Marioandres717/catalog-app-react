@@ -4,7 +4,7 @@ This repository is a part of "items catalog" project. This is a frontend app wri
 ## Quick start
 
 ### Prerequisites
-node js > 8.9.1
+- node js > 8.9.1
 
 ### `npm install`
 Downloads the packages needed to run the application
